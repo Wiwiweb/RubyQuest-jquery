@@ -1,0 +1,64 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: purple;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 2px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    /*overflow: hidden;*/
+}
+
+/*div {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
+#main {
+    background-color: red;
+}
+
+#image {
+    background-color: blue;
+    float: left;
+    height: 90%;
+}
+
+#text {
+    background-color: green;
+    overflow: hidden;
+    height: 90%;
+    font-size: 120%;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+
+#footer {
+    background-color: orange;
+    height: 10%;
+}
+
+#leftarrow {
+    float: left;
+    height: 80%;
+    position: relative;
+    top: 0.3em;
+}
+
+#rightarrow {
+    float: right;
+    height: 80%;
+    position: relative;
+    top: 0.3em;
+}
+
+.quote {
+    color: rgb(120, 153, 34);
+}
