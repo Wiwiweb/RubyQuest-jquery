@@ -10,15 +10,10 @@ body {
     margin: 0;
     padding: 2px;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
     /*overflow: hidden;*/
 }
-
-/*div {*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-/*}*/
 
 #main {
     background-color: red;
@@ -27,36 +22,43 @@ body {
 #image {
     background-color: blue;
     float: left;
-    height: 90%;
+    height: 85%;
 }
 
 #text {
     background-color: green;
     overflow: hidden;
-    height: 90%;
+    height: 85%;
     font-size: 120%;
     padding-left: 1em;
     padding-right: 1em;
 }
 
-
 #footer {
     background-color: orange;
-    height: 10%;
+    height: 15%;
+}
+
+.arrow {
+    height: 80%;
+    position: relative;
+    top: 0.3em;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow img {
+    height: 100%;
 }
 
 #leftarrow {
     float: left;
-    height: 80%;
-    position: relative;
-    top: 0.3em;
+    background: transparent;
 }
 
 #rightarrow {
     float: right;
-    height: 80%;
-    position: relative;
-    top: 0.3em;
+    background: transparent;
 }
 
 .quote {

@@ -1,0 +1,122 @@
+[
+    {
+        "page": 1,
+        "image": "1.gif",
+        "text": [
+            "It is very dark here. Hardly anything can be seen."
+        ]
+    },
+    {
+        "page": 2,
+        "image": "2.gif",
+        "text": [
+            ">Turn on the damn lights",
+            "Unfortunately it's too dark in here it's hard to tell where the lights are."
+        ]
+    },
+    {
+        "page": 3,
+        "image": "3.gif",
+        "text": [
+            ">search pockets",
+            "Feels like something metallic with a rubber grip. But there's no lighter, matches, or flashlight.",
+            "",
+            ">Walk over to the red thing.",
+            "As near as you can tell, the little red light is only a foot or so away from your face."
+        ]
+    },
+    {
+        "page": 4,
+        "image": "4.gif",
+        "text": [
+            ">Reach out and grasp for the red light.",
+            "Ah, there we go.",
+            "Ruby can see now."
+        ]
+    },
+    {
+        "page": 5,
+        "image": "5.gif",
+        "text": [
+            ">examine that thing we found in her pockets",
+            "Apparently, it's a hand-turned can-opener.",
+            "",
+            ">Grab the handle near the ceiling of the cell.",
+            "A row of small mesh holes open in the wall, venting in fresh air."
+        ]
+    },
+    {
+        "page": 6,
+        "image": "6.gif",
+        "text": [
+            ">Yell, \"Is anyone there?\"",
+            "Ruby yells, but there's no response. Her voice echoes in the small room.",
+            "",
+            ">Attempt to tap into her latent vampiric powers to see if she has a high enough level in Protean to turn into mist and escape the cell through the mesh wiring.",
+            "Sadly, Ruby has no vampiric powers.",
+            ">press every button she can find",
+            "Ruby gets the feeling that pressing all the buttons would probably be a bad idea. There are buttons of multiple colors -- which one should she try?"
+        ]
+    },
+    {
+        "page": 7,
+        "image": "7.gif",
+        "text": [
+            ">For the hell of it, purple.",
+            "Sweet success! Ruby presses the purple button and the top of the cell suddenly opens up to cool, clean air!"
+        ]
+    },
+    {
+        "page": 8,
+        "image": "8.gif",
+        "text": [
+            ">get out, look around",
+            "Ruby surveys her surroundings. There are no doors here, except for a portal on the north wall of this room. Unfortunately, there are metal shutters over the door."
+        ]
+    },
+    {
+        "page": 9,
+        "image": "9.gif",
+        "text": [
+            ">search that trashcan in the back",
+            "Ruby tries her best, but the lid of the barrel refuses to be pulled from its base. It won't open.",
+            "",
+            ">check the shelves",
+            "Do you mean the metal shutters? They're blocking the portal to the north."
+        ]
+    },
+    {
+        "page": 10,
+        "image": "10.gif",
+        "text": [
+            ">Look for a way to open that other cell.",
+            "The cell/locker/coffin on the ground has a latch on the outside, but it's sealed with what appears to be a digital lock. There's no obvious way to undo the lock from the locker itself."
+        ]
+    },
+    {
+        "page": 11,
+        "image": "11.gif",
+        "text": [
+            ">use can opener on can thing in the back.",
+            "The barrel's lid comes up with the can-opener's tenacious efforts!",
+            "Inside there's a few small lengths of BARE ELECTRICAL WIRE, but nothing else."
+        ]
+    },
+    {
+        "page": 12,
+        "image": "12.gif",
+        "text": [
+            "Ruby stows a piece of wire in her inventory.",
+            ">get a loadout of all of Ruby's abilities, general knowledges, and physical capabilities?",
+            "Ruby has no magical or otherwise extraordinary powers. She has no knowledge of where she is or how she got here, and though she is not a specialist and holds no particularly special knowledge she is reasonably competent with things most people would be.",
+            "Her physical capabilities are varied. She's limber, in good shape, but not particularly strong.",
+            "She is currently carrying:",
+            "CAN-OPENER",
+            "BARE LENGTH OF WIRE",
+            "",
+            ">chew on wire",
+            "Ruby is above such primitive practices as chewing on wire and cannibalizing her young. If she had any.",
+            "And besides, that would not be productive right now!"
+        ]
+    }
+]
