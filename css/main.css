@@ -8,15 +8,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 2px;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box; /* Opera/IE 8+ */
     /*overflow: hidden;*/
-}
-
-#main {
-    background-color: red;
 }
 
 #image {
@@ -28,15 +20,23 @@ body {
 #text {
     background-color: green;
     overflow: hidden;
-    height: 85%;
+    /*height: 85%;*/
     font-size: 120%;
     padding-left: 1em;
     padding-right: 1em;
+
+    /* This is to prevent the padding of the text to increase the width */
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box;  /* Opera/IE 8+ */
 }
 
 #footer {
     background-color: orange;
     height: 15%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .arrow {
@@ -63,4 +63,22 @@ body {
 
 .quote {
     color: rgb(120, 153, 34);
+}
+
+@media (max-aspect-ratio: 4/4) {
+    #image {
+        max-height: 50%;
+        margin: auto;
+        display: block;
+        float: none;
+    }
+
+    #text {
+        width: 100%;
+        font-size: 150%;
+    }
+
+    #footer {
+        height: 10%;
+    }
 }
