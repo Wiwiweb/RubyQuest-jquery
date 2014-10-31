@@ -28,7 +28,7 @@ body {
     /* This is to prevent the padding of the text to increase the width */
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box;  /* Opera/IE 8+ */
+    box-sizing: border-box; /* Opera/IE 8+ */
 }
 
 #footer {
@@ -65,7 +65,7 @@ body {
     color: rgb(120, 153, 34);
 }
 
-@media (max-aspect-ratio: 4/4) {
+@media (max-width: 320px), (max-aspect-ratio: 1/1) {
     #image {
         max-height: 50%;
         margin: auto;
@@ -74,8 +74,10 @@ body {
     }
 
     #text {
-        width: 100%;
-        font-size: 150%;
+        height: 40%;
+        width : 100%;
+        font-size: 130%;
+        overflow-y: auto;
     }
 
     #footer {
