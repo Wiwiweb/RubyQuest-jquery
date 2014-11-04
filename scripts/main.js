@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         var nb_pages = page_data.length;
 
-        update_arrow_visibility(page_nb, nb_pages);
+        update_arrow_visibility();
 
         $leftarrow.click(function () {
             left_arrow()
@@ -31,6 +31,9 @@ $(document).ready(function () {
                 right_arrow();
             }
         });
+        var swipeHammer = new Hammer($(document)[0]);
+        swipeHammer.on("swiperight", left_arrow);
+        swipeHammer.on("swipeleft", right_arrow);
 
         function left_arrow() {
             if (page_nb > 1) {
@@ -44,8 +47,8 @@ $(document).ready(function () {
         function right_arrow() {
             if (page_nb < nb_pages) {
                 page_nb++;
-                load_page(page_nb, page_data);
-                update_arrow_visibility(page_nb, page_data.length);
+                load_page();
+                update_arrow_visibility();
                 event.preventDefault();
             }
         }
