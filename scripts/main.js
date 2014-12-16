@@ -1,5 +1,6 @@
 var DATA_FOLDER = "./data/";
 var PAGE_IMAGES_FOLDER = "./images/pages/";
+var COMMAND_REGEX = /^{(\w+)}(.*)/;
 
 $(document).ready(function () {
 
@@ -12,16 +13,21 @@ $(document).ready(function () {
 
     $.getJSON(DATA_FOLDER + "chapter1.json", function (page_data) {
 
+        var comments_enabled = true;
+
         var nb_pages = page_data.length;
 
         update_arrow_visibility();
 
+        // Click controls
         $leftarrow.click(function () {
             left_arrow()
         });
         $rightarrow.click(function () {
             right_arrow()
         });
+
+        // Keyboard controls
         $(document).keydown(function (e) {
             var key = e.keyCode;
             if (key == 37) {  // Left arrow
@@ -31,9 +37,12 @@ $(document).ready(function () {
                 right_arrow();
             }
         });
+
+        // Swipe controls
         var swipeHammer = new Hammer($(document)[0]);
         swipeHammer.on("swiperight", left_arrow);
         swipeHammer.on("swipeleft", right_arrow);
+
 
         function left_arrow() {
             if (page_nb > 1) {
@@ -54,10 +63,40 @@ $(document).ready(function () {
         }
 
         function load_page() {
+            $text.empty();
+            var $paragraph = $("<p>");
+            $text.append($paragraph);
             var current_page_data = page_data[(page_nb - 1)];
             $image.attr("src", PAGE_IMAGES_FOLDER + current_page_data["image"]);
-            var text = format_text(current_page_data["text"]);
-            $text.html(text);
+            var data_text = current_page_data["script"];
+            for (var i = 0; i < data_text.length; i++) {
+                console.log("data_text[i]: " + data_text[i]);
+                var command = parse_command(data_text[i]);
+                if (command[1] == "") {
+                    // New paragraph
+                    if (command[0] != "comment" || (command[0] == "comment" && comments_enabled)) {
+                        $paragraph = $("<p>");
+                        $text.append($paragraph);
+                        continue;
+                    }
+                }
+                console.log("command: " + command);
+                var line;
+                switch (command[0]) {
+                    case null:
+                        line = format_text(command[1], null);
+                        $paragraph.append(line);
+                        break;
+                    case "comment":
+                        if (comments_enabled) {
+                            line = format_text(command[1], "comment");
+                            $paragraph.append(line);
+                        }
+                        break;
+                    default:
+                        console.warn("Unknown command: " + command[0]);
+                }
+            }
         }
 
         function update_arrow_visibility() {
@@ -75,26 +114,29 @@ $(document).ready(function () {
 
     });
 
-    function format_text(text_array) {
-        var result = "<p>";
-        for (var i = 0; i < text_array.length; i++) {
-            var line = text_array[i];
-            if (line == "") {
-                result += "</p><p>";
-            } else {
-                if (line.charAt(0) == '>') {
-                    result += "<span class=\"quote\">";
-                    result += line;
-                    result += "</span><br>"
-                } else {
-                    result += line;
-                    result += "<br>"
-                }
-            }
+    function parse_command(text) {
+        console.log("text: " + text);
+        var results = COMMAND_REGEX.exec(text);
+        if (results == null) {
+            return [null, text];
+        } else {
+            return [results[1], results[2]]
         }
-        result += "</p>";
-        return result
     }
 
-});
+    function format_text(line, text_class) {
+        if (text_class == null) {
+            text_class = "";
+        }
+        if (line.charAt(0) == '>') {
+            text_class += " quote";
+        }
+        if (text_class != null) {
+            line = "<span class=\"" + text_class.trim() + "\">" + line + "</span>";
+        }
+        line += "<br>";
+        return line;
+    }
+})
+;
 
