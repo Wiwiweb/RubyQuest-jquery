@@ -4,21 +4,23 @@ html {
 }
 
 body {
-    background-color: purple;
+    background-color: black;
+    color: white;
     width: 100%;
     height: 100%;
     margin: 0;
-    /*overflow: hidden;*/
+}
+
+h1 {
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif
 }
 
 #image {
-    background-color: blue;
     float: left;
     height: 85%;
 }
 
 #text {
-    background-color: green;
     overflow: hidden;
     height: 85%;
     font-size: 120%;
@@ -33,7 +35,7 @@ body {
 }
 
 #footer {
-    background-color: orange;
+    background-color: gray;
     height: 15%;
     position: absolute;
     bottom: 0;
@@ -81,7 +83,7 @@ body {
 
     #text {
         height: 40%;
-        width : 100%;
+        width: 100%;
         font-size: 130%;
     }
 
