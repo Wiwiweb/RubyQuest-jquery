@@ -65,13 +65,15 @@ h1 {
     background: transparent;
 }
 
-.quote {
-    color: rgb(120, 153, 34);
+.comment {
+    background-color: rgb(214, 218, 240);
+    box-shadow: 0 0 0 1px rgb(214, 218, 240);
+    color: black;
+    font-style: italic;
 }
 
-.comment {
-    background-color: dimgrey;
-    font-style: italic;
+.quote {
+    color: rgb(120, 153, 34);
 }
 
 @media (max-width: 320px), (max-aspect-ratio: 1/1) {
