@@ -66,7 +66,7 @@ $(document).ready(function () {
             $text.empty();
             var $paragraph = $("<p>");
             $text.append($paragraph);
-            var current_page_data = page_data[(page_nb - 1)];
+            var current_page_data = page_data[page_nb - 1];
             $image.attr("src", PAGE_IMAGES_FOLDER + current_page_data["image"]);
             var data_text = current_page_data["script"];
             for (var i = 0; i < data_text.length; i++) {
@@ -97,6 +97,9 @@ $(document).ready(function () {
                         console.warn("Unknown command: " + command[0]);
                 }
             }
+            // Preload next image
+            var nextImage = new Image();
+            nextImage.src = PAGE_IMAGES_FOLDER + page_data[page_nb]["image"];
         }
 
         function update_arrow_visibility() {
