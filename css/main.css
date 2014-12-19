@@ -52,6 +52,7 @@ h1 {
 
 .arrow img {
     height: 100%;
+    cursor: pointer;
 }
 
 #leftarrow {
