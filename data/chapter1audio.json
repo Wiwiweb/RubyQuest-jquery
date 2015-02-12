@@ -1,0 +1,18 @@
+[
+  {
+    "id": "buttonPress",
+    "url": "buttonPress.wav"
+  },
+  {
+    "id": "drama",
+    "url": "drama.flac"
+  },
+  {
+    "id": "hatchOpen",
+    "url": "hatchOpen.mp3"
+  },
+  {
+    "id": "shutterOpen",
+    "url": "shutterOpen.wav"
+  }
+]
