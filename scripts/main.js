@@ -7,109 +7,109 @@ var CHAPTER = 1;
 
 $(document).ready(function () {
 
-    var audio_initialized = false;
-    var comments_enabled = true;
-    var nb_pages = 0;
-    var page_data;
+    var audioInitialized = false;
+    var commentsEnabled = true;
+    var nbPages = 0;
+    var pageData;
 
 
-    var page_nb = 0;
+    var pageNb = 0;
 
-    var $leftarrow = $("#leftarrow");
-    var $rightarrow = $("#rightarrow");
+    var $leftArrow = $("#leftArrow");
+    var $rightArrow = $("#rightArrow");
     var $image = $("#image");
     var $text = $("#text");
 
-    $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initialize_audio);
+    $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
 
-    function initialize_audio(page_data_local) {
-        page_data = page_data_local;
+    function initializeAudio(pageDataLocal) {
+        pageData = pageDataLocal;
         soundManager.setup({
             url: '/swf/',
             preferFlash: false,
             onready: function () {
-                audio_initialized = true;
-                $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", create_all_sounds);
-                initialize(page_data);
+                audioInitialized = true;
+                $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createAllSounds);
+                initialize(pageData);
             },
             ontimeout: function () {
-                audio_initialized = false;
-                initialize(page_data);
+                audioInitialized = false;
+                initialize(pageData);
             }
         });
     }
 
-    function create_all_sounds(sound_data) {
-        for (var i = 0; i < sound_data.length; i++) {
-            console.log("sound[i]: " + sound_data[i]);
-            sound_data[i]["url"] = SOUND_FOLDER + sound_data[i]["url"];
-            sound_data[i]["autoLoad"] = true;
-            soundManager.createSound(sound_data[i]);
+    function createAllSounds(soundData) {
+        for (var i = 0; i < soundData.length; i++) {
+            console.log("sound[i]: " + soundData[i]);
+            soundData[i]["url"] = SOUND_FOLDER + soundData[i]["url"];
+            soundData[i]["autoLoad"] = true;
+            soundManager.createSound(soundData[i]);
         }
     }
 
     function initialize() {
-        nb_pages = page_data.length;
+        nbPages = pageData.length;
 
-        update_arrow_visibility();
+        updateArrowVisibility();
 
         // Click controls
-        $leftarrow.click(function () {
-            left_arrow()
+        $leftArrow.click(function () {
+            leftArrow()
         });
-        $rightarrow.click(function () {
-            right_arrow()
+        $rightArrow.click(function () {
+            rightArrow()
         });
 
         // Keyboard controls
         $(document).keydown(function (e) {
             var key = e.keyCode;
             if (key == 37) {  // Left arrow
-                left_arrow();
+                leftArrow();
             }
             if (key == 39) {  // Right arrow
-                right_arrow();
+                rightArrow();
             }
         });
 
         // Swipe controls
         var swipeHammer = new Hammer($(document)[0]);
-        swipeHammer.on("swiperight", left_arrow);
-        swipeHammer.on("swipeleft", right_arrow);
+        swipeHammer.on("swiperight", leftArrow);
+        swipeHammer.on("swipeleft", rightArrow);
     }
 
 
-    function left_arrow() {
-        if (page_nb > 1) {
-            page_nb--;
-            load_page();
-            update_arrow_visibility();
+    function leftArrow() {
+        if (pageNb > 1) {
+            pageNb--;
+            loadPage();
+            updateArrowVisibility();
             event.preventDefault();
         }
     }
 
-    function right_arrow() {
-        if (page_nb < nb_pages) {
-            page_nb++;
-            load_page();
-            update_arrow_visibility();
+    function rightArrow() {
+        if (pageNb < nbPages) {
+            pageNb++;
+            loadPage();
+            updateArrowVisibility();
             event.preventDefault();
         }
     }
 
-    function load_page() {
+    function loadPage() {
         $text.empty();
         var $paragraph = $("<p>");
         $text.append($paragraph);
-        var current_page_data = page_data[page_nb - 1];
-        $image.attr("src", PAGE_IMAGES_FOLDER + current_page_data["image"]);
-        var data_text = current_page_data["script"];
+        var currentPageData = pageData[pageNb - 1];
+        $image.attr("src", PAGE_IMAGES_FOLDER + currentPageData["image"]);
+        var data_text = currentPageData["script"];
         for (var i = 0; i < data_text.length; i++) {
-            console.log("data_text[i]: " + data_text[i]);
-            var command = parse_command(data_text[i]);
+            console.log("dataText[i]: " + data_text[i]);
+            var command = parseCommand(data_text[i]);
             if (command[1] == "") {
                 // New paragraph
-                if (command[0] != "comment" || (command[0] == "comment" && comments_enabled)) {
+                if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
                     $paragraph = $("<p>");
                     $text.append($paragraph);
                     continue;
@@ -119,18 +119,18 @@ $(document).ready(function () {
             var line;
             switch (command[0]) {
                 case null:
-                    line = format_text(command[1], null);
+                    line = formatText(command[1], null);
                     $paragraph.append(line);
                     break;
                 case "comment":
-                    if (comments_enabled) {
-                        line = format_text(command[1], "comment");
+                    if (commentsEnabled) {
+                        line = formatText(command[1], "comment");
                         $paragraph.append(line);
                     }
                     break;
                 case "playSound":
-                    if (audio_initialized) {
-                        play_sound(command[1]);
+                    if (audioInitialized) {
+                        playSound(command[1]);
                     }
                     break;
                 default:
@@ -139,23 +139,23 @@ $(document).ready(function () {
         }
         // Preload next image
         var nextImage = new Image();
-        nextImage.src = PAGE_IMAGES_FOLDER + page_data[page_nb]["image"];
+        nextImage.src = PAGE_IMAGES_FOLDER + pageData[pageNb]["image"];
     }
 
-    function update_arrow_visibility() {
-        if (page_nb <= 1) {
-            $leftarrow.hide();
+    function updateArrowVisibility() {
+        if (pageNb <= 1) {
+            $leftArrow.hide();
         } else {
-            $leftarrow.show();
+            $leftArrow.show();
         }
-        if (page_nb >= nb_pages) {
-            $rightarrow.hide();
+        if (pageNb >= nbPages) {
+            $rightArrow.hide();
         } else {
-            $rightarrow.show();
+            $rightArrow.show();
         }
     }
 
-    function parse_command(text) {
+    function parseCommand(text) {
         console.log("text: " + text);
         var results = COMMAND_REGEX.exec(text);
         if (results == null) {
@@ -165,22 +165,22 @@ $(document).ready(function () {
         }
     }
 
-    function format_text(line, text_class) {
-        if (text_class == null) {
-            text_class = "";
+    function formatText(line, textClass) {
+        if (textClass == null) {
+            textClass = "";
         }
         if (line.charAt(0) == '>') {
-            text_class += " quote";
+            textClass += " quote";
         }
-        if (text_class != null) {
-            line = "<span class=\"" + text_class.trim() + "\">" + line + "</span>";
+        if (textClass != null) {
+            line = "<span class=\"" + textClass.trim() + "\">" + line + "</span>";
         }
         line += "<br>";
         return line;
     }
 
-    function play_sound(sound_id) {
-        var sound = soundManager.getSoundById(sound_id);
+    function playSound(soundId) {
+        var sound = soundManager.getSoundById(soundId);
         sound.play();
     }
 })

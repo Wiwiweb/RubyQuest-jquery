@@ -55,12 +55,12 @@ h1 {
     cursor: pointer;
 }
 
-#leftarrow {
+#leftArrow {
     float: left;
     background: transparent;
 }
 
-#rightarrow {
+#rightArrow {
     float: right;
     background: transparent;
 }
