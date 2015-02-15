@@ -11,8 +11,7 @@ $(document).ready(function () {
     var commentsEnabled = true;
     var nbPages = 0;
     var pageData;
-
-
+    var currentMusic = null;
     var pageNb = 0;
 
     var $leftArrow = $("#leftArrow");
@@ -133,6 +132,11 @@ $(document).ready(function () {
                         playSound(command[1]);
                     }
                     break;
+                case "playMusic":
+                    if (audioInitialized) {
+                        playMusic(command[1]);
+                    }
+                    break;
                 default:
                     console.warn("Unknown command: " + command[0]);
             }
@@ -183,6 +187,13 @@ $(document).ready(function () {
         var sound = soundManager.getSoundById(soundId);
         sound.play();
     }
-})
-;
 
+    function playMusic(soundId) {
+        if (currentMusic !== null) {
+            currentMusic.stop();
+        }
+        var sound = soundManager.getSoundById(soundId);
+        sound.play();
+        currentMusic = sound;
+    }
+});

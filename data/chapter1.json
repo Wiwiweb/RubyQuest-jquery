@@ -2,7 +2,7 @@
   {
     "image": "1.gif",
     "script": [
-      "{playMusic}darkCave",
+      "{playMusic}caveAmbient",
       "It is very dark here. Hardly anything can be seen."
     ]
   },

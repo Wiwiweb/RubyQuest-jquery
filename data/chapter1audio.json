@@ -13,6 +13,16 @@
   },
   {
     "id": "shutterOpen",
-    "url": "shutterOpen.wav"
+    "url": "shutterOpen.mp3"
+  },
+  {
+    "id": "caveAmbient",
+    "url": "music/caveAmbient.ogg",
+    "loops": 99
+  },
+  {
+    "id": "tomTheme",
+    "url": "music/02_The_Room_is_Boring.mp3",
+    "loops": 99
   }
 ]
