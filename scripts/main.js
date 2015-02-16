@@ -12,6 +12,7 @@ $(document).ready(function () {
     var nbPages = 0;
     var pageData;
     var currentMusic = null;
+    var currentSound = null;
     var pageNb = 0;
 
     var $leftArrow = $("#leftArrow");
@@ -97,6 +98,9 @@ $(document).ready(function () {
     }
 
     function loadPage() {
+        if (currentSound !== null) {
+            currentSound.stop();
+        }
         $text.empty();
         var $paragraph = $("<p>");
         $text.append($paragraph);
@@ -191,6 +195,7 @@ $(document).ready(function () {
     function playSound(soundId) {
         var sound = soundManager.getSoundById(soundId);
         sound.play();
+        currentSound = sound;
     }
 
     function playMusic(soundId) {
@@ -207,24 +212,24 @@ $(document).ready(function () {
         if (currentMusic !== null) {
             var interval = timeToFade / 100;
             var fadingOutMusic = currentMusic;
-            currentMusic = null;
             // We need a recursive function instead of a loop because we want to rely on setTimeout to stay asynchronous
-            function fadeOutMusicRecursiveLoop(fadingOutMusic, interval) {
-                var volume = fadingOutMusic.volume;
+            function fadeOutMusicRecursiveLoop(interval) {
+                var volume = currentMusic.volume;
                 if (volume > 0) {
-                    fadingOutMusic.setVolume(volume - 1);
-                    setTimeout(callbackWithArguments, interval);
+                    currentMusic.setVolume(volume - 1);
+                    setTimeout(callbackWithArgument, interval);
                 } else {
-                    fadingOutMusic.stop();
+                    currentMusic.stop();
+                    currentMusic = null;
                 }
             }
 
             // Faster than creating a new anonymous function every time
-            function callbackWithArguments() {
-                fadeOutMusicRecursiveLoop(fadingOutMusic, interval);
+            function callbackWithArgument() {
+                fadeOutMusicRecursiveLoop(interval);
             }
 
-            fadeOutMusicRecursiveLoop(fadingOutMusic, interval);
+            fadeOutMusicRecursiveLoop(interval);
         }
     }
 });
