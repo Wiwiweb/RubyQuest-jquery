@@ -15,6 +15,8 @@ $(document).ready(function () {
     var currentSound = null;
     var pageNb = 0;
 
+    var fadeOutMusicTimeout = null;
+
     var $leftArrow = $("#leftArrow");
     var $rightArrow = $("#rightArrow");
     var $image = $("#image");
@@ -157,14 +159,14 @@ $(document).ready(function () {
 
     function updateArrowVisibility() {
         if (pageNb <= 1) {
-            $leftArrow.hide();
+            $leftArrow.css("visibility", "hidden");
         } else {
-            $leftArrow.show();
+            $leftArrow.css("visibility", "visible");
         }
         if (pageNb >= nbPages) {
-            $rightArrow.hide();
+            $rightArrow.css("visibility", "hidden");
         } else {
-            $rightArrow.show();
+            $rightArrow.css("visibility", "visible");
         }
     }
 
@@ -201,6 +203,7 @@ $(document).ready(function () {
     function playMusic(soundId) {
         if (currentMusic !== null) {
             currentMusic.stop();
+            clearTimeout(fadeOutMusicTimeout);
         }
         var music = soundManager.getSoundById(soundId);
         music.setVolume(100);
@@ -211,13 +214,12 @@ $(document).ready(function () {
     function fadeOutMusic(timeToFade) {
         if (currentMusic !== null) {
             var interval = timeToFade / 100;
-            var fadingOutMusic = currentMusic;
             // We need a recursive function instead of a loop because we want to rely on setTimeout to stay asynchronous
             function fadeOutMusicRecursiveLoop(interval) {
                 var volume = currentMusic.volume;
                 if (volume > 0) {
                     currentMusic.setVolume(volume - 1);
-                    setTimeout(callbackWithArgument, interval);
+                    fadeOutMusicTimeout = setTimeout(callbackWithArgument, interval);
                 } else {
                     currentMusic.stop();
                     currentMusic = null;

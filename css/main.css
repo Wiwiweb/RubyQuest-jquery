@@ -40,9 +40,10 @@ h1 {
     position: absolute;
     bottom: 0;
     width: 100%;
+    text-align: center
 }
 
-.arrow {
+.button {
     height: 80%;
     position: relative;
     top: 0.3em;
@@ -50,19 +51,13 @@ h1 {
     cursor: pointer;
 }
 
-.arrow img {
-    height: 100%;
-    cursor: pointer;
-}
-
 #leftArrow {
     float: left;
-    background: transparent;
+    visibility: hidden;
 }
 
 #rightArrow {
     float: right;
-    background: transparent;
 }
 
 .comment {
