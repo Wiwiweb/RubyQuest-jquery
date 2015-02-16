@@ -464,7 +464,7 @@
   {
     "image": "50.gif",
     "script": [
-      "{fadeDownMusic}",
+      "{fadeOutMusic}5000",
       ">Crawl through the hatch.",
       "Ruby gets on all fours and crawls through the hatch with a rather suggestive series of movements. But since that's boring let's just skip ahead to the part where she emerges in the room on the other side of the wall."
     ]
@@ -828,7 +828,7 @@
   {
     "image": "92.gif",
     "script": [
-      "{fadeDownMusic}"
+      "{fadeOutMusic}5000"
     ]
   },
   {

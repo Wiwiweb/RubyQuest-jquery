@@ -106,7 +106,7 @@ $(document).ready(function () {
         for (var i = 0; i < data_text.length; i++) {
             console.log("dataText[i]: " + data_text[i]);
             var command = parseCommand(data_text[i]);
-            if (command[1] == "") {
+            if (command[0] == "" && command[1] == "") {
                 // New paragraph
                 if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
                     $paragraph = $("<p>");
@@ -135,6 +135,11 @@ $(document).ready(function () {
                 case "playMusic":
                     if (audioInitialized) {
                         playMusic(command[1]);
+                    }
+                    break;
+                case "fadeOutMusic":
+                    if (audioInitialized) {
+                        fadeOutMusic(command[1]);
                     }
                     break;
                 default:
@@ -192,8 +197,34 @@ $(document).ready(function () {
         if (currentMusic !== null) {
             currentMusic.stop();
         }
-        var sound = soundManager.getSoundById(soundId);
-        sound.play();
-        currentMusic = sound;
+        var music = soundManager.getSoundById(soundId);
+        music.setVolume(100);
+        music.play();
+        currentMusic = music;
+    }
+
+    function fadeOutMusic(timeToFade) {
+        if (currentMusic !== null) {
+            var interval = timeToFade / 100;
+            var fadingOutMusic = currentMusic;
+            currentMusic = null;
+            // We need a recursive function instead of a loop because we want to rely on setTimeout to stay asynchronous
+            function fadeOutMusicRecursiveLoop(fadingOutMusic, interval) {
+                var volume = fadingOutMusic.volume;
+                if (volume > 0) {
+                    fadingOutMusic.setVolume(volume - 1);
+                    setTimeout(callbackWithArguments, interval);
+                } else {
+                    fadingOutMusic.stop();
+                }
+            }
+
+            // Faster than creating a new anonymous function every time
+            function callbackWithArguments() {
+                fadeOutMusicRecursiveLoop(fadingOutMusic, interval);
+            }
+
+            fadeOutMusicRecursiveLoop(fadingOutMusic, interval);
+        }
     }
 });
