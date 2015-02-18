@@ -1,4 +1,5 @@
 var DATA_FOLDER = "./data/";
+var IMAGES_FOLDER = "./images/";
 var SOUND_FOLDER = "./sound/";
 var PAGE_IMAGES_FOLDER = "./images/pages/";
 var COMMAND_REGEX = /^{(\w+)}(.*)/;
@@ -15,10 +16,15 @@ $(document).ready(function () {
     var currentSound = null;
     var pageNb = 0;
 
+    var musicMuted = false;
+    var soundVolume = 100;
+
     var fadeOutMusicTimeout = null;
 
     var $leftArrow = $("#leftArrow");
     var $rightArrow = $("#rightArrow");
+    var $musicButton = $("#musicButton");
+    var $volumeButton = $("#volumeButton");
     var $image = $("#image");
     var $text = $("#text");
 
@@ -53,15 +59,19 @@ $(document).ready(function () {
     function initialize() {
         nbPages = pageData.length;
 
+        // Preload button images
+        preloadImage(IMAGES_FOLDER + "noMusic.png");
+        preloadImage(IMAGES_FOLDER + "volumeMedium.png");
+        preloadImage(IMAGES_FOLDER + "volumeLow.png");
+        preloadImage(IMAGES_FOLDER + "volumeMute.png");
+
         updateArrowVisibility();
 
         // Click controls
-        $leftArrow.click(function () {
-            leftArrow()
-        });
-        $rightArrow.click(function () {
-            rightArrow()
-        });
+        $leftArrow.click(leftArrow);
+        $rightArrow.click(rightArrow);
+        $musicButton.click(toggleMusic);
+        $volumeButton.click(toggleVolume);
 
         // Keyboard controls
         $(document).keydown(function (e) {
@@ -98,6 +108,49 @@ $(document).ready(function () {
             event.preventDefault();
         }
     }
+
+    function toggleMusic() {
+        if (musicMuted) {
+            musicMuted = false;
+            if (currentMusic !== null) {
+                currentMusic.play();
+            }
+            $musicButton.attr("src", IMAGES_FOLDER + "music.png");
+        } else {
+            musicMuted = true;
+            if (currentMusic !== null) {
+                currentMusic.stop();
+            }
+            $musicButton.attr("src", IMAGES_FOLDER + "noMusic.png");
+        }
+    }
+
+    function toggleVolume() {
+        switch (soundVolume) {
+            case 100:
+                soundVolume = 66;
+                $volumeButton.attr("src", IMAGES_FOLDER + "volumeMedium.png");
+                break;
+            case 66:
+                soundVolume = 33;
+                $volumeButton.attr("src", IMAGES_FOLDER + "volumeLow.png");
+                break;
+            case 33:
+                // Mute
+                soundVolume = 0;
+                soundManager.stopAll();
+                $volumeButton.attr("src", IMAGES_FOLDER + "volumeMute.png");
+                break;
+            case 0:
+                // Un-mute
+                soundVolume = 100;
+                currentMusic.play();
+                $volumeButton.attr("src", IMAGES_FOLDER + "volumeHigh.png");
+                break;
+        }
+        setAllVolume(soundVolume);
+    }
+
 
     function loadPage() {
         if (currentSound !== null) {
@@ -153,8 +206,7 @@ $(document).ready(function () {
             }
         }
         // Preload next image
-        var nextImage = new Image();
-        nextImage.src = PAGE_IMAGES_FOLDER + pageData[pageNb]["image"];
+        preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
     }
 
     function updateArrowVisibility() {
@@ -195,9 +247,12 @@ $(document).ready(function () {
     }
 
     function playSound(soundId) {
-        var sound = soundManager.getSoundById(soundId);
-        sound.play();
-        currentSound = sound;
+        if (soundVolume !== 0) {
+            var sound = soundManager.getSoundById(soundId);
+            sound.setVolume(soundVolume);
+            sound.play();
+            currentSound = sound;
+        }
     }
 
     function playMusic(soundId) {
@@ -206,8 +261,12 @@ $(document).ready(function () {
             clearTimeout(fadeOutMusicTimeout);
         }
         var music = soundManager.getSoundById(soundId);
-        music.setVolume(100);
-        music.play();
+        music.setVolume(soundVolume);
+        // If the music is muted, we still need to remember which music is supposed to be playing (currentMusic)
+        // This is why the whole function is not inside this conditional
+        if (!musicMuted) {
+            music.play();
+        }
         currentMusic = music;
     }
 
@@ -232,6 +291,19 @@ $(document).ready(function () {
             }
 
             fadeOutMusicRecursiveLoop(interval);
+        }
+    }
+
+    function preloadImage(src) {
+        $('<img/>')[0].src = src;
+    }
+
+    function setAllVolume(volume) {
+        if (currentMusic !== null) {
+            currentMusic.setVolume(volume);
+        }
+        if (currentSound !== null) {
+            currentSound.setVolume(volume);
         }
     }
 });
