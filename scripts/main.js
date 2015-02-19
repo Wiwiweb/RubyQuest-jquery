@@ -164,49 +164,54 @@ $(document).ready(function () {
         var data_text = currentPageData["script"];
         for (var i = 0; i < data_text.length; i++) {
             console.log("dataText[i]: " + data_text[i]);
-            var command = parseCommand(data_text[i]);
-            if (command[0] == "" && command[1] == "") {
-                // New paragraph
-                if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
-                    $paragraph = $("<p>");
-                    $text.append($paragraph);
-                    continue;
-                }
-            }
-            console.log("command: " + command);
-            var line;
-            switch (command[0]) {
-                case null:
-                    line = formatText(command[1], null);
-                    $paragraph.append(line);
-                    break;
-                case "comment":
-                    if (commentsEnabled) {
-                        line = formatText(command[1], "comment");
-                        $paragraph.append(line);
-                    }
-                    break;
-                case "playSound":
-                    if (audioInitialized) {
-                        playSound(command[1]);
-                    }
-                    break;
-                case "playMusic":
-                    if (audioInitialized) {
-                        playMusic(command[1]);
-                    }
-                    break;
-                case "fadeOutMusic":
-                    if (audioInitialized) {
-                        fadeOutMusic(command[1]);
-                    }
-                    break;
-                default:
-                    console.warn("Unknown command: " + command[0]);
+            var line = data_text[i];
+            readLine(line, $paragraph)
+        }
+        // Preload next images
+        preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
+    }
+
+    function readLine(line, $paragraph) {
+        var command = parseCommand(line);
+        if (command[0] == "" && command[1] == "") {
+            // New paragraph
+            if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
+                $paragraph = $("<p>");
+                $text.append($paragraph);
+                return;
             }
         }
-        // Preload next image
-        preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
+        console.log("command: " + command);
+        var $span;
+        switch (command[0]) {
+            case null:
+                $span = appendInlineTags($paragraph, null, line);
+                $span.append(command[1]);
+                break;
+            case "comment":
+                if (commentsEnabled) {
+                    $span = appendInlineTags($paragraph, "comment", line);
+                    $span.append(command[1]);
+                }
+                break;
+            case "playSound":
+                if (audioInitialized) {
+                    playSound(command[1]);
+                }
+                break;
+            case "playMusic":
+                if (audioInitialized) {
+                    playMusic(command[1]);
+                }
+                break;
+            case "fadeOutMusic":
+                if (audioInitialized) {
+                    fadeOutMusic(command[1]);
+                }
+                break;
+            default:
+                console.warn("Unknown command: " + command[0]);
+        }
     }
 
     function updateArrowVisibility() {
@@ -232,18 +237,20 @@ $(document).ready(function () {
         }
     }
 
-    function formatText(line, textClass) {
-        if (textClass == null) {
-            textClass = "";
+    function appendInlineTags($paragraph, cssClass, line) {
+        var $span = $("<span>");
+        if (cssClass == null) {
+            cssClass = "";
         }
         if (line.charAt(0) == '>') {
-            textClass += " quote";
+            cssClass += " quote";
         }
-        if (textClass != null) {
-            line = "<span class=\"" + textClass.trim() + "\">" + line + "</span>";
+        if (cssClass != "") {
+            $span.attr("class", cssClass);
         }
-        line += "<br>";
-        return line;
+        $paragraph.append($span);
+        $paragraph.append($("<br>"));
+        return $span;
     }
 
     function playSound(soundId) {
