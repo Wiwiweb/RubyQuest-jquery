@@ -3,6 +3,8 @@ var IMAGES_FOLDER = "./images/";
 var SOUND_FOLDER = "./sound/";
 var PAGE_IMAGES_FOLDER = "./images/pages/";
 var COMMAND_REGEX = /^{(\w+)}(.*)/;
+var TEXT_SCROLL_INTERVAL = 25;
+var BETWEEN_LINES_INTERVAL = 400;
 
 var CHAPTER = 1;
 
@@ -18,8 +20,10 @@ $(document).ready(function () {
 
     var musicMuted = false;
     var soundVolume = 100;
+    var textScroll = true;
 
     var fadeOutMusicTimeout = null;
+    var scrollingTimeout = null;
 
     var $leftArrow = $("#leftArrow");
     var $rightArrow = $("#rightArrow");
@@ -161,17 +165,18 @@ $(document).ready(function () {
         $text.append($paragraph);
         var currentPageData = pageData[pageNb - 1];
         $image.attr("src", PAGE_IMAGES_FOLDER + currentPageData["image"]);
-        var data_text = currentPageData["script"];
-        for (var i = 0; i < data_text.length; i++) {
-            console.log("dataText[i]: " + data_text[i]);
-            var line = data_text[i];
-            readLine(line, $paragraph)
-        }
+        var dataText = currentPageData["script"];
+        readLineRecursive(dataText, 0, $paragraph);
         // Preload next images
         preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
     }
 
-    function readLine(line, $paragraph) {
+    function readLineRecursive(dataText, lineNb, $paragraph) {
+        if (lineNb >= dataText.length) {
+            // End of recursion
+            return
+        }
+        var line = dataText[lineNb];
         var command = parseCommand(line);
         if (command[0] == "" && command[1] == "") {
             // New paragraph
@@ -186,28 +191,39 @@ $(document).ready(function () {
         switch (command[0]) {
             case null:
                 $span = appendInlineTags($paragraph, null, line);
-                $span.append(command[1]);
+                // displayText needs variable time to finish.
+                // It will call readLineRecursive when done, so we don't need to do it.
+                displayText($span, command[1], dataText, lineNb, $paragraph);
                 break;
             case "comment":
                 if (commentsEnabled) {
                     $span = appendInlineTags($paragraph, "comment", line);
-                    $span.append(command[1]);
+                    displayText($span, command[1], dataText, lineNb, $paragraph);
                 }
                 break;
             case "playSound":
                 if (audioInitialized) {
                     playSound(command[1]);
                 }
+                setTimeout(function () {
+                    readLineRecursive(dataText, lineNb + 1, $paragraph);
+                }, BETWEEN_LINES_INTERVAL);
                 break;
             case "playMusic":
                 if (audioInitialized) {
                     playMusic(command[1]);
                 }
+                setTimeout(function () {
+                    readLineRecursive(dataText, lineNb + 1, $paragraph);
+                }, BETWEEN_LINES_INTERVAL);
                 break;
             case "fadeOutMusic":
                 if (audioInitialized) {
                     fadeOutMusic(command[1]);
                 }
+                setTimeout(function () {
+                    readLineRecursive(dataText, lineNb + 1, $paragraph);
+                }, BETWEEN_LINES_INTERVAL);
                 break;
             default:
                 console.warn("Unknown command: " + command[0]);
@@ -251,6 +267,31 @@ $(document).ready(function () {
         $paragraph.append($span);
         $paragraph.append($("<br>"));
         return $span;
+    }
+
+    function displayText($element, line, dataText, lineNb, $paragraph) {
+        if (textScroll) {
+            function scrollTextRecursiveLoop(target, message, index) {
+                if (index < message.length) {
+                    target.append(message[index++]);
+                    scrollingTimeout = setTimeout(function () {
+                        scrollTextRecursiveLoop($element, line, index);
+                    }, TEXT_SCROLL_INTERVAL);
+                } else {
+                    setTimeout(function () {
+                        readLineRecursive(dataText, lineNb + 1, $paragraph);
+                    }, BETWEEN_LINES_INTERVAL);
+                }
+            }
+
+            scrollTextRecursiveLoop($element, line, 0);
+
+        } else {
+            $element.append(line);
+            setTimeout(function () {
+                readLineRecursive(dataText, lineNb + 1, $paragraph);
+            }, BETWEEN_LINES_INTERVAL);
+        }
     }
 
     function playSound(soundId) {
