@@ -191,66 +191,68 @@ $(document).ready(function () {
         }
         var line = dataText[lineNb];
         var command = parseCommand(line);
-        if (command[0] == "" && command[1] == "") {
+        if (command[0] === null && command[1] == "") {
             // New paragraph
             if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
                 $paragraph = $("<p>");
                 $text.append($paragraph);
             }
-        }
-        console.log("command: " + command);
-        var $span;
-        switch (command[0]) {
-            case null:
-                $span = appendInlineTags($paragraph, null, line);
-                // displayText needs variable time to finish.
-                // It will call readLinesRecursive when done, so we don't need to do it.
-                displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
-                break;
-            case "comment":
-                if (commentsEnabled) {
-                    $span = appendInlineTags($paragraph, "comment", line);
+            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+        } else {
+            console.log("command: " + command);
+            var $span;
+            switch (command[0]) {
+                case null:
+                    $span = appendInlineTags($paragraph, null, line);
+                    // displayText needs variable time to finish.
+                    // It will call readLinesRecursive when done, so we don't need to do it.
                     displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
-                }
-                break;
-            case "playSound":
-                if (audioInitialized) {
-                    playSound(command[1]);
-                }
-                if (textScroll && !skippingTextScroll) {
-                    scrollingTimeout = setTimeout(function () {
+                    break;
+                case "comment":
+                    if (commentsEnabled) {
+                        $span = appendInlineTags($paragraph, "comment", line);
+                        displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
+                    }
+                    break;
+                case "playSound":
+                    if (audioInitialized) {
+                        playSound(command[1]);
+                    }
+                    if (textScroll && !skippingTextScroll) {
+                        scrollingTimeout = setTimeout(function () {
+                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                        }, BETWEEN_LINES_INTERVAL);
+                    } else {
                         readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }, BETWEEN_LINES_INTERVAL);
-                } else {
-                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                }
-                break;
-            case "playMusic":
-                if (audioInitialized) {
-                    playMusic(command[1]);
-                }
-                if (textScroll && !skippingTextScroll) {
-                    scrollingTimeout = setTimeout(function () {
+                    }
+                    break;
+                case "playMusic":
+                    if (audioInitialized) {
+                        playMusic(command[1]);
+                    }
+                    if (textScroll && !skippingTextScroll) {
+                        scrollingTimeout = setTimeout(function () {
+                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                        }, BETWEEN_LINES_INTERVAL);
+                    } else {
                         readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }, BETWEEN_LINES_INTERVAL);
-                } else {
-                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                }
-                break;
-            case "fadeOutMusic":
-                if (audioInitialized) {
-                    fadeOutMusic(command[1]);
-                }
-                if (textScroll && !skippingTextScroll) {
-                    scrollingTimeout = setTimeout(function () {
+                    }
+                    break;
+                case "fadeOutMusic":
+                    if (audioInitialized) {
+                        fadeOutMusic(command[1]);
+                    }
+                    if (textScroll && !skippingTextScroll) {
+                        scrollingTimeout = setTimeout(function () {
+                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                        }, BETWEEN_LINES_INTERVAL);
+                    } else {
                         readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }, BETWEEN_LINES_INTERVAL);
-                } else {
-                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                }
-                break;
-            default:
-                console.warn("Unknown command: " + command[0]);
+                    }
+                    break;
+                default:
+                    console.warn("Unknown command: " + command[0]);
+            }
         }
     }
 
