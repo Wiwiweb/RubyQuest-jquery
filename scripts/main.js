@@ -5,6 +5,7 @@ var PAGE_IMAGES_FOLDER = "./images/pages/";
 var COMMAND_REGEX = /^{(\w+)}(.*)/;
 var TEXT_SCROLL_INTERVAL = 25;
 var BETWEEN_LINES_INTERVAL = 400;
+var BETWEEN_PARAGRAPHS_INTERVAL = 800;
 
 var CHAPTER = 1;
 
@@ -34,6 +35,8 @@ $(document).ready(function () {
     var $text = $("#text");
 
     $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
+
+    // Initializing -----------------------------------------------------------
 
     function initializeAudio(pageDataLocal) {
         pageData = pageDataLocal;
@@ -95,6 +98,7 @@ $(document).ready(function () {
         swipeHammer.on("swipeleft", rightArrow);
     }
 
+    // Buttons ----------------------------------------------------------------
 
     function leftArrow() {
         if (pageNb > 1) {
@@ -123,6 +127,19 @@ $(document).ready(function () {
             loadPage();
             updateArrowVisibility();
             event.preventDefault();
+        }
+    }
+
+    function updateArrowVisibility() {
+        if (pageNb <= 1) {
+            $leftArrow.css("visibility", "hidden");
+        } else {
+            $leftArrow.css("visibility", "visible");
+        }
+        if (pageNb >= nbPages) {
+            $rightArrow.css("visibility", "hidden");
+        } else {
+            $rightArrow.css("visibility", "visible");
         }
     }
 
@@ -168,6 +185,7 @@ $(document).ready(function () {
         setAllVolume(soundVolume);
     }
 
+    // Page load and parsing --------------------------------------------------
 
     function loadPage() {
         if (currentSound !== null) {
@@ -197,7 +215,8 @@ $(document).ready(function () {
                 $paragraph = $("<p>");
                 $text.append($paragraph);
             }
-            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+            readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
+                skippingTextScroll, BETWEEN_PARAGRAPHS_INTERVAL);
         } else {
             console.log("command: " + command);
             var $span;
@@ -218,37 +237,22 @@ $(document).ready(function () {
                     if (audioInitialized) {
                         playSound(command[1]);
                     }
-                    if (textScroll && !skippingTextScroll) {
-                        scrollingTimeout = setTimeout(function () {
-                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                        }, BETWEEN_LINES_INTERVAL);
-                    } else {
-                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }
+                    readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
+                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
                     break;
                 case "playMusic":
                     if (audioInitialized) {
                         playMusic(command[1]);
                     }
-                    if (textScroll && !skippingTextScroll) {
-                        scrollingTimeout = setTimeout(function () {
-                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                        }, BETWEEN_LINES_INTERVAL);
-                    } else {
-                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }
+                    readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
+                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
                     break;
                 case "fadeOutMusic":
                     if (audioInitialized) {
                         fadeOutMusic(command[1]);
                     }
-                    if (textScroll && !skippingTextScroll) {
-                        scrollingTimeout = setTimeout(function () {
-                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                        }, BETWEEN_LINES_INTERVAL);
-                    } else {
-                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }
+                    readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
+                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
                     break;
                 default:
                     console.warn("Unknown command: " + command[0]);
@@ -256,16 +260,13 @@ $(document).ready(function () {
         }
     }
 
-    function updateArrowVisibility() {
-        if (pageNb <= 1) {
-            $leftArrow.css("visibility", "hidden");
+    function readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph, skippingTextScroll, interval) {
+        if (textScroll && !skippingTextScroll) {
+            scrollingTimeout = setTimeout(function () {
+                readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+            }, interval);
         } else {
-            $leftArrow.css("visibility", "visible");
-        }
-        if (pageNb >= nbPages) {
-            $rightArrow.css("visibility", "hidden");
-        } else {
-            $rightArrow.css("visibility", "visible");
+            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
         }
     }
 
@@ -295,6 +296,8 @@ $(document).ready(function () {
         return $span;
     }
 
+    // Commands ---------------------------------------------------------------
+
     function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll) {
         if (textScroll) {
             function scrollTextRecursiveLoop(target, message, index) {
@@ -311,13 +314,8 @@ $(document).ready(function () {
 
                 } else {
                     textCurrentlyScrolling = false;
-                    if (textScroll && !skippingTextScroll) {
-                        scrollingTimeout = setTimeout(function () {
-                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                        }, BETWEEN_LINES_INTERVAL);
-                    } else {
-                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }
+                    readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
+                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
                 }
             }
 
@@ -378,6 +376,8 @@ $(document).ready(function () {
             fadeOutMusicRecursiveLoop(interval);
         }
     }
+
+    // Utility ----------------------------------------------------------------
 
     function preloadImage(src) {
         $('<img/>')[0].src = src;
