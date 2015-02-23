@@ -24,6 +24,7 @@ $(document).ready(function () {
 
     var fadeOutMusicTimeout = null;
     var scrollingTimeout = null;
+    var textCurrentlyScrolling = false;
 
     var $leftArrow = $("#leftArrow");
     var $rightArrow = $("#rightArrow");
@@ -97,6 +98,7 @@ $(document).ready(function () {
 
     function leftArrow() {
         if (pageNb > 1) {
+            clearTimeout(scrollingTimeout);
             pageNb--;
             loadPage();
             updateArrowVisibility();
@@ -105,7 +107,18 @@ $(document).ready(function () {
     }
 
     function rightArrow() {
-        if (pageNb < nbPages) {
+        if (textCurrentlyScrolling) {
+            // Erase everything and display all lines immediately
+            clearTimeout(scrollingTimeout);
+            var currentPageData = pageData[pageNb - 1];
+            var dataText = currentPageData["script"];
+            $text.empty();
+            var paragraph = $("<p>");
+            $text.append(paragraph);
+            // Skipping text scroll = true
+            readLinesRecursive(dataText, 0, paragraph, true);
+            textCurrentlyScrolling = false;
+        } else if (pageNb < nbPages) {
             pageNb++;
             loadPage();
             updateArrowVisibility();
@@ -161,17 +174,17 @@ $(document).ready(function () {
             currentSound.stop();
         }
         $text.empty();
-        var $paragraph = $("<p>");
-        $text.append($paragraph);
         var currentPageData = pageData[pageNb - 1];
         $image.attr("src", PAGE_IMAGES_FOLDER + currentPageData["image"]);
         var dataText = currentPageData["script"];
-        readLineRecursive(dataText, 0, $paragraph);
+        var paragraph = $("<p>");
+        $text.append(paragraph);
+        readLinesRecursive(dataText, 0, paragraph, false);
         // Preload next images
         preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
     }
 
-    function readLineRecursive(dataText, lineNb, $paragraph) {
+    function readLinesRecursive(dataText, lineNb, $paragraph, skippingTextScroll) {
         if (lineNb >= dataText.length) {
             // End of recursion
             return
@@ -183,7 +196,6 @@ $(document).ready(function () {
             if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
                 $paragraph = $("<p>");
                 $text.append($paragraph);
-                return;
             }
         }
         console.log("command: " + command);
@@ -192,38 +204,50 @@ $(document).ready(function () {
             case null:
                 $span = appendInlineTags($paragraph, null, line);
                 // displayText needs variable time to finish.
-                // It will call readLineRecursive when done, so we don't need to do it.
-                displayText($span, command[1], dataText, lineNb, $paragraph);
+                // It will call readLinesRecursive when done, so we don't need to do it.
+                displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
                 break;
             case "comment":
                 if (commentsEnabled) {
                     $span = appendInlineTags($paragraph, "comment", line);
-                    displayText($span, command[1], dataText, lineNb, $paragraph);
+                    displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
                 }
                 break;
             case "playSound":
                 if (audioInitialized) {
                     playSound(command[1]);
                 }
-                setTimeout(function () {
-                    readLineRecursive(dataText, lineNb + 1, $paragraph);
-                }, BETWEEN_LINES_INTERVAL);
+                if (textScroll && !skippingTextScroll) {
+                    scrollingTimeout = setTimeout(function () {
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                    }, BETWEEN_LINES_INTERVAL);
+                } else {
+                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                }
                 break;
             case "playMusic":
                 if (audioInitialized) {
                     playMusic(command[1]);
                 }
-                setTimeout(function () {
-                    readLineRecursive(dataText, lineNb + 1, $paragraph);
-                }, BETWEEN_LINES_INTERVAL);
+                if (textScroll && !skippingTextScroll) {
+                    scrollingTimeout = setTimeout(function () {
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                    }, BETWEEN_LINES_INTERVAL);
+                } else {
+                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                }
                 break;
             case "fadeOutMusic":
                 if (audioInitialized) {
                     fadeOutMusic(command[1]);
                 }
-                setTimeout(function () {
-                    readLineRecursive(dataText, lineNb + 1, $paragraph);
-                }, BETWEEN_LINES_INTERVAL);
+                if (textScroll && !skippingTextScroll) {
+                    scrollingTimeout = setTimeout(function () {
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                    }, BETWEEN_LINES_INTERVAL);
+                } else {
+                    readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                }
                 break;
             default:
                 console.warn("Unknown command: " + command[0]);
@@ -269,18 +293,29 @@ $(document).ready(function () {
         return $span;
     }
 
-    function displayText($element, line, dataText, lineNb, $paragraph) {
+    function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll) {
         if (textScroll) {
             function scrollTextRecursiveLoop(target, message, index) {
+                textCurrentlyScrolling = true;
                 if (index < message.length) {
                     target.append(message[index++]);
-                    scrollingTimeout = setTimeout(function () {
+                    if (textScroll && !skippingTextScroll) {
+                        scrollingTimeout = setTimeout(function () {
+                            scrollTextRecursiveLoop($element, line, index);
+                        }, TEXT_SCROLL_INTERVAL);
+                    } else {
                         scrollTextRecursiveLoop($element, line, index);
-                    }, TEXT_SCROLL_INTERVAL);
+                    }
+
                 } else {
-                    setTimeout(function () {
-                        readLineRecursive(dataText, lineNb + 1, $paragraph);
-                    }, BETWEEN_LINES_INTERVAL);
+                    textCurrentlyScrolling = false;
+                    if (textScroll && !skippingTextScroll) {
+                        scrollingTimeout = setTimeout(function () {
+                            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                        }, BETWEEN_LINES_INTERVAL);
+                    } else {
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                    }
                 }
             }
 
@@ -289,7 +324,7 @@ $(document).ready(function () {
         } else {
             $element.append(line);
             setTimeout(function () {
-                readLineRecursive(dataText, lineNb + 1, $paragraph);
+                readLinesRecursive(dataText, lineNb + 1, $paragraph);
             }, BETWEEN_LINES_INTERVAL);
         }
     }
