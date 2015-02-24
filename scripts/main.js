@@ -299,33 +299,28 @@ $(document).ready(function () {
     // Commands ---------------------------------------------------------------
 
     function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll) {
-        if (textScroll) {
+        if (textScroll && !skippingTextScroll) {
             function scrollTextRecursiveLoop(target, message, index) {
                 textCurrentlyScrolling = true;
                 if (index < message.length) {
-                    target.append(message[index++]);
-                    if (textScroll && !skippingTextScroll) {
-                        scrollingTimeout = setTimeout(function () {
-                            scrollTextRecursiveLoop($element, line, index);
-                        }, TEXT_SCROLL_INTERVAL);
-                    } else {
+                    var nextChar = message[index++];
+                    target.append(nextChar);
+                    scrollingTimeout = setTimeout(function () {
                         scrollTextRecursiveLoop($element, line, index);
-                    }
+                    }, TEXT_SCROLL_INTERVAL);
 
                 } else {
                     textCurrentlyScrolling = false;
-                    readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
-                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
+                    scrollingTimeout = setTimeout(function () {
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
+                    }, BETWEEN_LINES_INTERVAL);
                 }
             }
 
             scrollTextRecursiveLoop($element, line, 0);
-
         } else {
             $element.append(line);
-            setTimeout(function () {
-                readLinesRecursive(dataText, lineNb + 1, $paragraph);
-            }, BETWEEN_LINES_INTERVAL);
+            readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
         }
     }
 
