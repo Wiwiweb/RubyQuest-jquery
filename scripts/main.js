@@ -178,7 +178,9 @@ $(document).ready(function () {
             case 0:
                 // Un-mute
                 soundVolume = 100;
-                currentMusic.play();
+                if (currentMusic !== null) {
+                    currentMusic.play();
+                }
                 $volumeButton.attr("src", IMAGES_FOLDER + "volumeHigh.png");
                 break;
         }
