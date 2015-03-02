@@ -12,7 +12,7 @@ body {
 }
 
 h1 {
-    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
 }
 
 #image {
@@ -50,16 +50,16 @@ h1 {
     cursor: pointer;
 }
 
-#leftArrow {
+#left-arrow {
     float: left;
     visibility: hidden;
 }
 
-#rightArrow {
+#right-arrow {
     float: right;
 }
 
-#advancedOptionsMenu {
+#advanced-options-menu {
     position: absolute;
     background-color: gray;
     border: solid 2px white;
@@ -70,7 +70,7 @@ h1 {
     transition: opacity .5s;
 }
 
-.opacityHidden {
+.opacity-hidden {
     opacity: 0;
 }
 

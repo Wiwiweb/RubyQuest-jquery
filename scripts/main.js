@@ -27,14 +27,14 @@ $(document).ready(function () {
     var scrollingTimeout = null;
     var textCurrentlyScrolling = false;
 
-    var $leftArrow = $("#leftArrow");
-    var $rightArrow = $("#rightArrow");
-    var $musicButton = $("#musicButton");
-    var $volumeButton = $("#volumeButton");
-    var $advancedOptionsButton = $("#advancedOptionsButton");
+    var $leftArrow = $("#left-arrow");
+    var $rightArrow = $("#right-arrow");
+    var $musicButton = $("#music-button");
+    var $volumeButton = $("#volume-button");
+    var $advancedOptionsButton = $("#advanced-options-button");
     var $image = $("#image");
     var $text = $("#text");
-    var $advancedOptionsMenu = $("#advancedOptionsMenu");
+    var $advancedOptionsMenu = $("#advanced-options-menu");
 
     $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
 
@@ -84,12 +84,12 @@ $(document).ready(function () {
         $volumeButton.click(toggleVolume);
         $advancedOptionsButton.click(function (event) {
             event.stopPropagation();
-            $advancedOptionsMenu.toggleClass("opacityHidden");
+            $advancedOptionsMenu.toggleClass("opacity-hidden");
         });
 
         // Hide options menu when clicking elsewhere
         $("html").click(function () {
-            $advancedOptionsMenu.addClass("opacityHidden");
+            $advancedOptionsMenu.addClass("opacity-hidden");
         });
 
         // Override previous click binding so that clicking on the menu itself doesn't hide it
