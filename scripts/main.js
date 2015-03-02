@@ -3,9 +3,6 @@ var IMAGES_FOLDER = "./images/";
 var SOUND_FOLDER = "./sound/";
 var PAGE_IMAGES_FOLDER = "./images/pages/";
 var COMMAND_REGEX = /^{(\w+)}(.*)/;
-var TEXT_SCROLL_INTERVAL = 25;
-var BETWEEN_LINES_INTERVAL = 400;
-var BETWEEN_PARAGRAPHS_INTERVAL = 800;
 
 var CHAPTER = 1;
 
@@ -34,7 +31,18 @@ $(document).ready(function () {
     var $advancedOptionsButton = $("#advanced-options-button");
     var $image = $("#image");
     var $text = $("#text");
+
     var $advancedOptionsMenu = $("#advanced-options-menu");
+    var $textScrollCheckbox = $("#text-scroll-checkbox");
+    var $textScrollIntervalTextbox = $("#text-scroll-interval-textbox");
+
+    var textScrollInterval = 25;
+    var betweenLinesInterval = function () {
+        return textScrollInterval * 16;
+    };
+    var betweenParagraphsInterval = function () {
+        return textScrollInterval * 32;
+    };
 
     $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
 
@@ -87,16 +95,6 @@ $(document).ready(function () {
             $advancedOptionsMenu.toggleClass("opacity-hidden");
         });
 
-        // Hide options menu when clicking elsewhere
-        $("html").click(function () {
-            $advancedOptionsMenu.addClass("opacity-hidden");
-        });
-
-        // Override previous click binding so that clicking on the menu itself doesn't hide it
-        $advancedOptionsMenu.click(function (event) {
-            event.stopPropagation();
-        });
-
         // Keyboard controls
         $(document).keydown(function (e) {
             var key = e.keyCode;
@@ -112,6 +110,29 @@ $(document).ready(function () {
         var swipeHammer = new Hammer($(document)[0]);
         swipeHammer.on("swiperight", leftArrow);
         swipeHammer.on("swipeleft", rightArrow);
+
+        // Other buttons
+
+        // Hide options menu when clicking elsewhere
+        $("html").click(function () {
+            $advancedOptionsMenu.addClass("opacity-hidden");
+        });
+
+        // Override previous click binding so that clicking on the menu itself doesn't hide it
+        $advancedOptionsMenu.click(function (event) {
+            event.stopPropagation();
+        });
+
+        $textScrollCheckbox.change(function () {
+            textScroll = this.checked;
+            $textScrollIntervalTextbox.prop('disabled', !textScroll);
+            $("#text-scroll-interval-textbox-label").toggleClass('disabled', !textScroll);
+        });
+
+        $textScrollIntervalTextbox.change(function () {
+            textScrollInterval = $(this).val();
+            charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
+        });
     }
 
     // Buttons ----------------------------------------------------------------
@@ -235,7 +256,7 @@ $(document).ready(function () {
                 $text.append($paragraph);
             }
             readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
-                skippingTextScroll, BETWEEN_PARAGRAPHS_INTERVAL);
+                skippingTextScroll, betweenParagraphsInterval());
         } else {
             console.log("command: " + command);
             var $span;
@@ -257,21 +278,21 @@ $(document).ready(function () {
                         playSound(command[1]);
                     }
                     readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
-                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
+                        skippingTextScroll, betweenLinesInterval());
                     break;
                 case "playMusic":
                     if (audioInitialized) {
                         playMusic(command[1]);
                     }
                     readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
-                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
+                        skippingTextScroll, betweenLinesInterval());
                     break;
                 case "fadeOutMusic":
                     if (audioInitialized) {
                         fadeOutMusic(command[1]);
                     }
                     readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
-                        skippingTextScroll, BETWEEN_LINES_INTERVAL);
+                        skippingTextScroll, betweenLinesInterval());
                     break;
                 default:
                     console.warn("Unknown command: " + command[0]);
@@ -326,13 +347,12 @@ $(document).ready(function () {
                     target.append(nextChar);
                     scrollingTimeout = setTimeout(function () {
                         scrollTextRecursiveLoop($element, line, index);
-                    }, TEXT_SCROLL_INTERVAL);
-
+                    }, textScrollInterval);
                 } else {
                     textCurrentlyScrolling = false;
                     scrollingTimeout = setTimeout(function () {
                         readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
-                    }, BETWEEN_LINES_INTERVAL);
+                    }, betweenLinesInterval());
                 }
             }
 
