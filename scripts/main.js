@@ -206,7 +206,8 @@ $(document).ready(function () {
 
     function readLinesRecursive(dataText, lineNb, $paragraph, skippingTextScroll) {
         if (lineNb >= dataText.length) {
-            // End of recursion
+            // End of recursion, the page is fully loaded
+            $text.append("<p class=\"arrow\">▶</p>");
             return
         }
         var line = dataText[lineNb];

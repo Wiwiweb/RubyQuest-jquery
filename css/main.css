@@ -71,6 +71,23 @@ h1 {
     color: rgb(120, 153, 34);
 }
 
+.arrow {
+    -webkit-animation: blinker 2s ease-in-out infinite;
+    animation: blinker 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes blinker {
+    0% { opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { opacity: 0.0; }
+}
+
+@keyframes blinker {
+    0% { opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { opacity: 0.0; }
+}
+
 @media (max-width: 320px), (max-aspect-ratio: 1/1) {
     #image {
         max-height: 50%;
