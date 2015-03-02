@@ -31,8 +31,10 @@ $(document).ready(function () {
     var $rightArrow = $("#rightArrow");
     var $musicButton = $("#musicButton");
     var $volumeButton = $("#volumeButton");
+    var $advancedOptionsButton = $("#advancedOptionsButton");
     var $image = $("#image");
     var $text = $("#text");
+    var $advancedOptionsMenu = $("#advancedOptionsMenu");
 
     $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
 
@@ -80,6 +82,20 @@ $(document).ready(function () {
         $rightArrow.click(rightArrow);
         $musicButton.click(toggleMusic);
         $volumeButton.click(toggleVolume);
+        $advancedOptionsButton.click(function (event) {
+            event.stopPropagation();
+            $advancedOptionsMenu.toggleClass("opacityHidden");
+        });
+
+        // Hide options menu when clicking elsewhere
+        $("html").click(function () {
+            $advancedOptionsMenu.addClass("opacityHidden");
+        });
+
+        // Override previous click binding so that clicking on the menu itself doesn't hide it
+        $advancedOptionsMenu.click(function (event) {
+            event.stopPropagation();
+        });
 
         // Keyboard controls
         $(document).keydown(function (e) {

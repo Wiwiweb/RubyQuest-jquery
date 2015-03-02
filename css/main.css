@@ -22,21 +22,20 @@ h1 {
 
 #text {
     overflow: hidden;
-    height: 85%;
+    height: 88%;
     font-size: 120%;
     padding-left: 1em;
     padding-right: 1em;
     overflow-y: auto;
 
     /* This is to prevent the padding of the text to increase the width */
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box; /* Firefox, other Gecko */
-    box-sizing: border-box; /* Opera/IE 8+ */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 #footer {
     background-color: gray;
-    height: 15%;
+    height: 12%;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -58,6 +57,21 @@ h1 {
 
 #rightArrow {
     float: right;
+}
+
+#advancedOptionsMenu {
+    position: absolute;
+    background-color: gray;
+    border: solid 2px white;
+    width: 20em;
+    top: 40%;
+    left: calc(50% - 10em);
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+.opacityHidden {
+    opacity: 0;
 }
 
 .comment {
