@@ -3,6 +3,7 @@ var IMAGES_FOLDER = "./images/";
 var SOUND_FOLDER = "./sound/";
 var PAGE_IMAGES_FOLDER = "./images/pages/";
 var COMMAND_REGEX = /^{(\w+)}(.*)/;
+var TEXT_BLIP_INTERVAL = 50;
 
 var CHAPTER = 1;
 
@@ -19,6 +20,7 @@ $(document).ready(function () {
     var musicMuted = false;
     var soundVolume = 100;
     var textScroll = true;
+    var textBlips = true;
 
     var fadeOutMusicTimeout = null;
     var scrollingTimeout = null;
@@ -44,6 +46,8 @@ $(document).ready(function () {
         return textScrollInterval * 32;
     };
 
+    var charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
+
     $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
 
     // Initializing -----------------------------------------------------------
@@ -55,7 +59,8 @@ $(document).ready(function () {
             preferFlash: false,
             onready: function () {
                 audioInitialized = true;
-                $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createAllSounds);
+                $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createSounds);
+                $.getJSON(DATA_FOLDER + "textBlips.json", createSounds);
                 initialize(pageData);
             },
             ontimeout: function () {
@@ -65,9 +70,8 @@ $(document).ready(function () {
         });
     }
 
-    function createAllSounds(soundData) {
+    function createSounds(soundData) {
         for (var i = 0; i < soundData.length; i++) {
-            console.log("sound[i]: " + soundData[i]);
             soundData[i]["url"] = SOUND_FOLDER + soundData[i]["url"];
             soundData[i]["autoLoad"] = true;
             soundManager.createSound(soundData[i]);
@@ -340,11 +344,20 @@ $(document).ready(function () {
 
     function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll) {
         if (textScroll && !skippingTextScroll) {
+            var charsUntilNextBlip = 1;
+
             function scrollTextRecursiveLoop(target, message, index) {
                 textCurrentlyScrolling = true;
                 if (index < message.length) {
                     var nextChar = message[index++];
                     target.append(nextChar);
+                    if (textBlips && /\S/.test(nextChar)) {
+                        charsUntilNextBlip--;
+                        if (charsUntilNextBlip == 0) {
+                            playSound("textBlip");
+                            charsUntilNextBlip = charsUntilBlip;
+                        }
+                    }
                     scrollingTimeout = setTimeout(function () {
                         scrollTextRecursiveLoop($element, line, index);
                     }, textScrollInterval);
