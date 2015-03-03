@@ -361,7 +361,7 @@ $(document).ready(function () {
                     if (textBlips && /\S/.test(nextChar)) {
                         charsUntilNextBlip--;
                         if (charsUntilNextBlip == 0) {
-                            playSound("textBlip");
+                            playBlip("textBlip");
                             charsUntilNextBlip = charsUntilBlip;
                         }
                     }
@@ -386,9 +386,17 @@ $(document).ready(function () {
     function playSound(soundId) {
         if (soundVolume !== 0) {
             var sound = soundManager.getSoundById(soundId);
-            sound.setVolume(soundVolume);
-            sound.play();
+            sound.play({volume: soundVolume});
             currentSound = sound;
+        }
+    }
+
+    // A slightly lighter version of playSound(), since blips are played very frequently
+    // and don't need to be remembered
+    function playBlip(soundId) {
+        if (soundVolume !== 0) {
+            var sound = soundManager.getSoundById(soundId);
+            sound.play({volume: soundVolume});
         }
     }
 
@@ -398,11 +406,10 @@ $(document).ready(function () {
             clearTimeout(fadeOutMusicTimeout);
         }
         var music = soundManager.getSoundById(soundId);
-        music.setVolume(soundVolume);
         // If the music is muted, we still need to remember which music is supposed to be playing (currentMusic)
         // This is why the whole function is not inside this conditional
         if (!musicMuted) {
-            music.play();
+            music.play({volume: soundVolume});
         }
         currentMusic = music;
     }
