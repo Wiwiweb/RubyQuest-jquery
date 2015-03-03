@@ -37,6 +37,7 @@ $(document).ready(function () {
     var $advancedOptionsMenu = $("#advanced-options-menu");
     var $textScrollCheckbox = $("#text-scroll-checkbox");
     var $textScrollIntervalTextbox = $("#text-scroll-interval-textbox");
+    var $textScrollBlipsCheckbox = $("#text-scroll-blips-checkbox");
 
     var textScrollInterval = 25;
     var betweenLinesInterval = function () {
@@ -131,11 +132,17 @@ $(document).ready(function () {
             textScroll = this.checked;
             $textScrollIntervalTextbox.prop('disabled', !textScroll);
             $("#text-scroll-interval-textbox-label").toggleClass('disabled', !textScroll);
+            $textScrollBlipsCheckbox.prop('disabled', !textScroll);
+            $("#text-scroll-blips-checkbox-label").toggleClass('disabled', !textScroll);
         });
 
         $textScrollIntervalTextbox.change(function () {
             textScrollInterval = $(this).val();
             charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
+        });
+
+        $textScrollBlipsCheckbox.change(function () {
+            textBlips = this.checked;
         });
     }
 
