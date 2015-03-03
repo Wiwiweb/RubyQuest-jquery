@@ -2,5 +2,9 @@
   {
     "id": "textBlip",
     "url": "textBlip.wav"
+  },
+  {
+    "id": "textBlipQuote",
+    "url": "textBlipHigh.wav"
   }
 ]

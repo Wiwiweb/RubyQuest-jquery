@@ -273,15 +273,19 @@ $(document).ready(function () {
             var $span;
             switch (command[0]) {
                 case null:
-                    $span = appendInlineTags($paragraph, null, line);
+                    var cssClass = null;
+                    if (line.charAt(0) == '>') {
+                        cssClass = "quote";
+                    }
+                    $span = appendInlineTags($paragraph, cssClass);
                     // displayText needs variable time to finish.
                     // It will call readLinesRecursive when done, so we don't need to do it.
-                    displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
+                    displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll, cssClass);
                     break;
                 case "comment":
                     if (commentsEnabled) {
-                        $span = appendInlineTags($paragraph, "comment", line);
-                        displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll);
+                        $span = appendInlineTags($paragraph, "comment");
+                        displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll, "comment");
                     }
                     break;
                 case "playSound":
@@ -331,15 +335,9 @@ $(document).ready(function () {
         }
     }
 
-    function appendInlineTags($paragraph, cssClass, line) {
+    function appendInlineTags($paragraph, cssClass) {
         var $span = $("<span>");
-        if (cssClass == null) {
-            cssClass = "";
-        }
-        if (line.charAt(0) == '>') {
-            cssClass += " quote";
-        }
-        if (cssClass != "") {
+        if (cssClass != null) {
             $span.attr("class", cssClass);
         }
         $paragraph.append($span);
@@ -349,11 +347,17 @@ $(document).ready(function () {
 
     // Commands ---------------------------------------------------------------
 
-    function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll) {
+    function displayText($element, line, dataText, lineNb, $paragraph, skippingTextScroll, blipClass) {
         if (textScroll && !skippingTextScroll) {
             var charsUntilNextBlip = 1;
+            if (blipClass == null) {
+                blipClass = "";
+            } else {
+                // Capitalize the first letter because the sound id is CamelCase
+                blipClass = blipClass.charAt(0).toUpperCase() + blipClass.slice(1);
+            }
 
-            function scrollTextRecursiveLoop(target, message, index) {
+            function scrollTextRecursiveLoop(target, message, index, blipClass) {
                 textCurrentlyScrolling = true;
                 if (index < message.length) {
                     var nextChar = message[index++];
@@ -361,12 +365,12 @@ $(document).ready(function () {
                     if (textBlips && /\S/.test(nextChar)) {
                         charsUntilNextBlip--;
                         if (charsUntilNextBlip == 0) {
-                            playBlip("textBlip");
+                            playBlip("textBlip" + blipClass);
                             charsUntilNextBlip = charsUntilBlip;
                         }
                     }
                     scrollingTimeout = setTimeout(function () {
-                        scrollTextRecursiveLoop($element, line, index);
+                        scrollTextRecursiveLoop($element, line, index, blipClass);
                     }, textScrollInterval);
                 } else {
                     textCurrentlyScrolling = false;
@@ -376,7 +380,7 @@ $(document).ready(function () {
                 }
             }
 
-            scrollTextRecursiveLoop($element, line, 0);
+            scrollTextRecursiveLoop($element, line, 0, blipClass);
         } else {
             $element.append(line);
             readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
