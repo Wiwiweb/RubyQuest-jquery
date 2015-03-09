@@ -255,6 +255,9 @@ $(document).ready(function () {
     }
 
     function readLinesRecursive(dataText, lineNb, $paragraph, skippingTextScroll) {
+        if (textScroll && !skippingTextScroll) {
+            textCurrentlyScrolling = true;
+        }
         if (lineNb >= dataText.length) {
             // End of recursion, the page is fully loaded
             var $arrow = $('<span class="arrow">▶</span>');
@@ -273,7 +276,6 @@ $(document).ready(function () {
             readLinesRecursiveTimeoutIfNeeded(dataText, lineNb, $paragraph,
                 skippingTextScroll, betweenParagraphsInterval());
         } else {
-            console.log("command: " + command);
             var $span;
             switch (command[0]) {
                 case null:
@@ -330,7 +332,6 @@ $(document).ready(function () {
     }
 
     function parseCommand(text) {
-        console.log("text: " + text);
         var results = COMMAND_REGEX.exec(text);
         if (results == null) {
             return [null, text];
@@ -362,7 +363,6 @@ $(document).ready(function () {
             }
 
             function scrollTextRecursiveLoop(target, message, index, blipClass) {
-                textCurrentlyScrolling = true;
                 if (index < message.length) {
                     var nextChar = message[index++];
                     target.append(nextChar);
