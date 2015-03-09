@@ -31,6 +31,7 @@ $(document).ready(function () {
     var $musicButton = $("#music-button");
     var $volumeButton = $("#volume-button");
     var $advancedOptionsButton = $("#advanced-options-button");
+    var $originalUrlLink = $("#original-url-link");
     var $image = $("#image");
     var $text = $("#text");
 
@@ -243,6 +244,7 @@ $(document).ready(function () {
         }
         $text.empty();
         var currentPageData = pageData[pageNb - 1];
+        $originalUrlLink.attr("href", currentPageData["originalUrl"]);
         $image.attr("src", PAGE_IMAGES_FOLDER + currentPageData["image"]);
         var dataText = currentPageData["script"];
         var paragraph = $("<p>");

@@ -1,6 +1,7 @@
 [
   {
     "image": "1.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195071",
     "script": [
       "{playMusic}caveAmbient",
       "It is very dark here. Hardly anything can be seen."
@@ -8,6 +9,7 @@
   },
   {
     "image": "2.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195083",
     "script": [
       ">Turn on the damn lights",
       "Unfortunately it's too dark in here it's hard to tell where the lights are."
@@ -15,6 +17,7 @@
   },
   {
     "image": "3.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195104",
     "script": [
       ">search pockets",
       "Feels like something metallic with a rubber grip. But there's no lighter, matches, or flashlight.",
@@ -25,6 +28,7 @@
   },
   {
     "image": "4.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195145",
     "script": [
       ">Reach out and grasp for the red light.",
       "{playSound}buttonPress",
@@ -34,6 +38,7 @@
   },
   {
     "image": "5.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#195183",
     "script": [
       ">examine that thing we found in her pockets",
       "Apparently, it's a hand-turned can-opener.",
@@ -44,6 +49,7 @@
   },
   {
     "image": "6.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195223",
     "script": [
       ">Yell, \"Is anyone there?\"",
       "Ruby yells, but there's no response. Her voice echoes in the small room.",
@@ -56,6 +62,7 @@
   },
   {
     "image": "7.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195245",
     "script": [
       ">For the hell of it, purple.",
       "{comment}>We already pressed the red button, the green buttons ALWAYS GET PRESSED IN EVERY MEDIA EVER, and the blue button... well, that's pretty, so we don't want to smudge it with our fingerprints just yet",
@@ -65,6 +72,7 @@
   },
   {
     "image": "8.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195268",
     "script": [
       ">get out, look around",
       "Ruby surveys her surroundings. There are no doors here, except for a portal on the north wall of this room. Unfortunately, there are metal shutters over the door."
@@ -72,6 +80,7 @@
   },
   {
     "image": "9.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195291",
     "script": [
       ">search that trashcan in the back",
       "Ruby tries her best, but the lid of the barrel refuses to be pulled from its base. It won't open.",
@@ -82,6 +91,7 @@
   },
   {
     "image": "10.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195334",
     "script": [
       ">Look for a way to open that other cell.",
       "The cell/locker/coffin on the ground has a latch on the outside, but it's sealed with what appears to be a digital lock. There's no obvious way to undo the lock from the locker itself."
@@ -89,6 +99,7 @@
   },
   {
     "image": "11.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195363",
     "script": [
       ">use can opener on can thing in the back.",
       "{playSound}hatchOpen",
@@ -98,6 +109,7 @@
   },
   {
     "image": "12.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195413",
     "script": [
       "Ruby stows a piece of wire in her inventory.",
       ">get a loadout of all of Ruby's abilities, general knowledges, and physical capabilities?",
@@ -114,6 +126,7 @@
   },
   {
     "image": "13.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195464",
     "script": [
       ">shlick furiously",
       "Ruby has slightly bigger concerns at the moment. Slightly.",
@@ -128,6 +141,7 @@
   },
   {
     "image": "14.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195493",
     "script": [
       ">knock on the other cell",
       "Ruby knocks insistently on the metal locker cell, but there's no audible or visible response."
@@ -135,6 +149,7 @@
   },
   {
     "image": "15.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195541",
     "script": [
       ">can we open the trap a the back left corner, but not go down yet in case there's no ladder?",
       "Unfortunately, it's the other way around!",
@@ -143,6 +158,7 @@
   },
   {
     "image": "16.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195578",
     "script": [
       ">Move the remains of the barrel to one side, see if anything lies under it.",
       "Ruby tries to shove the big barrel aside, but her physique is just too admirably girlish. It won't budge."
@@ -150,6 +166,7 @@
   },
   {
     "image": "17.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195603",
     "script": [
       ">Create a saw using the barrel pieces, wrapping the handle with the BARE ELECTRICAL WIRE. Attempt to saw through the bars.",
       "Not only would a saw made of razor-sharp barrel-metal and bare wire be INCREDIBLY dangerous to use in ANY way, it certainly wouldn't have the durability or control to cut through these bars, which appear to be a stronger metal than the barrel anyway.",
@@ -159,6 +176,7 @@
   },
   {
     "image": "18.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195629",
     "script": [
       ">Attempt to fashion a crude screwdriver by shredding off part of the currently worn clothing.",
       "Ruby sees where you're going with this.",
@@ -172,6 +190,7 @@
   },
   {
     "image": "19.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195651",
     "script": [
       ">Was not going there. Intended to remove an extraneous piece of clothing for the sake of hand-protection",
       "Ruby doesn't have enough clothing on for anything to really be considered extraneous.",
@@ -183,6 +202,7 @@
   },
   {
     "image": "20.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195657",
     "script": [
       ">While we're at it, enter command \"sound horn\"",
       "The console doesn't appear to recognize that command."
@@ -190,6 +210,7 @@
   },
   {
     "image": "21.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195663",
     "script": [
       ">enter \"open door\".",
       "That got a response, but unfortunately the results weren't what Ruby had hoped for."
@@ -197,6 +218,7 @@
   },
   {
     "image": "22.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195687",
     "script": [
       ">open the locker",
       "Ruby takes the two small coins off the top of the locker and pockets them. She opens it up to find...",
@@ -207,6 +229,7 @@
   },
   {
     "image": "23.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195716",
     "script": [
       ">That's a lot of evidence pointing to that Shlicking session...",
       "Heavy rubber gloves don't make for very enjoyable shlicking!",
@@ -217,6 +240,7 @@
   },
   {
     "image": "24.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195725",
     "script": [
       ">Don the gloves, fix the terminal with the wire, and screw it together using one of the coins?",
       "A brilliant idea, especially since it negates the possibility of electrocution.",
@@ -225,6 +249,7 @@
   },
   {
     "image": "25.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195735",
     "script": [
       ">inspect the coins",
       "The two coins seem to just be ordinary-looking quarters.",
@@ -235,6 +260,7 @@
   },
   {
     "image": "26.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195745",
     "script": [
       ">Press the green button",
       "Here goes nothing.",
@@ -244,6 +270,7 @@
   },
   {
     "image": "27.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195749",
     "script": [
       "The metal shutters start to lift...",
       "",
@@ -253,6 +280,7 @@
   },
   {
     "image": "28.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195772",
     "script": [
       "...it would appear that Ruby is underwater.",
       "{comment}",
@@ -261,6 +289,7 @@
   },
   {
     "image": "29.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195814",
     "script": [
       ">push down arrow",
       "The down arrow still isn't lit, and doesn't respond to being pressed.",
@@ -271,6 +300,7 @@
   },
   {
     "image": "30.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195826",
     "script": [
       ">enter \"open access shaft 017\"",
       "Using the number on the plaque outside as a reference, Ruby attempts to try opening the bars to the access shaft via the computer terminal once more."
@@ -278,6 +308,7 @@
   },
   {
     "image": "31.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195833",
     "script": [
       ">Look outside, see how far it is to the surface. Also, see if any predatory fish are visible.",
       "The water is murky. Ruby can see neither the surface nor any details on the sea life swimming past the glass.",
@@ -287,6 +318,7 @@
   },
   {
     "image": "32.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195862",
     "script": [
       ">Climb down. Hope nothing reaches up the shaft and grabs her from below.",
       "Ruby descends down the access shaft's ladder.",
@@ -295,6 +327,7 @@
   },
   {
     "image": "33.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195909",
     "script": [
       "{playMusic}tomTheme",
       "Ruby descends the access hatch and comes upon a new room.",
@@ -303,6 +336,7 @@
   },
   {
     "image": "34.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195950",
     "script": [
       ">say hello.",
       "Ruby introduces herself and says hi.",
@@ -313,6 +347,7 @@
   },
   {
     "image": "35.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195977",
     "script": [
       ">Ask tom how long he's been here and what he knows about this place",
       "Tom won't say how long he's been here. Just that he woke up in the cell and hasn't gotten out since.",
@@ -328,6 +363,7 @@
   },
   {
     "image": "36.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195982",
     "script": [
       ">What be that in the fish tank?",
       "The fish tank seems to contain, along with the fish, a tiny treasure chest for decoration."
@@ -335,6 +371,7 @@
   },
   {
     "image": "37.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196005",
     "script": [
       ">Ask about statue.",
       "Tom explains that this is his Opus, titled \"The Room is Boring\". It appears to consist of a TIN CAN, a LETTER-OPENER, and a METAL PLATE with screws on its four corners."
@@ -342,6 +379,7 @@
   },
   {
     "image": "38.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196029",
     "script": [
       ">Any of the fish look dangerous?",
       "The fish are all quite tiny.",
@@ -353,6 +391,7 @@
   },
   {
     "image": "39.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196069",
     "script": [
       ">ask about those round things in the wall next to him.",
       "Tom explains that the five things on the walls are very functional buttons, but so far he's only tried pressing the middle one.",
@@ -366,6 +405,7 @@
   },
   {
     "image": "40.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196083",
     "script": [
       ">Grab treasure, then dump aquarium on Tom",
       "The fishtank is bolted to the pedestal it's on, which in turn is bolted to the floor.",
@@ -374,6 +414,7 @@
   },
   {
     "image": "41.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196102",
     "script": [
       ">Open treasure chest.",
       "It refuses to open. It must be locked.",
@@ -387,6 +428,7 @@
   },
   {
     "image": "42.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196142",
     "script": [
       ">Remind us, what is Ruby's current inventory?",
       "Ruby is carrying TWO COINS, a CAN-OPENER, a pair of RUBBER GLOVES, and now a TINY TREASURE CHEST.",
@@ -399,6 +441,7 @@
   },
   {
     "image": "43.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196149",
     "script": [
       ">Hand over gloves",
       "The gloves won't fit through the grate.",
@@ -411,6 +454,7 @@
   },
   {
     "image": "44.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196188",
     "script": [
       ">Offer sexual favors for his cooperation.",
       ">Tell him you'll sex him up if he cooperates.",
@@ -419,6 +463,7 @@
   },
   {
     "image": "45.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196206",
     "script": [
       ">How about Ruby just flashes him her tits?",
       "Oh no! Unfortunately for all parties involved, Ruby is flat as a board! That probably won't work."
@@ -426,6 +471,7 @@
   },
   {
     "image": "46.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196225",
     "script": [
       ">give the cat the fish",
       "Ruby slips Tom some of the small fish as a gesture of goodwill. He's hungry, so he accepts."
@@ -433,6 +479,7 @@
   },
   {
     "image": "47.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196235",
     "script": [
       ">Apologize to Tom, and mention nonchalantly that you were jealous of his epic Opus",
       "Feeling a bit calmed by your offering of fish, Tom graciously offers to rotate the piece to face you."
@@ -440,6 +487,7 @@
   },
   {
     "image": "48.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196265",
     "script": [
       ">Go upstairs and enter \"open z-hatch 211\" into the terminal.",
       "Sure enough, Tom's code seems to work, and the system accepts the function."
@@ -447,6 +495,7 @@
   },
   {
     "image": "49.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196298",
     "script": [
       ">climb back down tell Tom you'll see where the hatch goes and crawl through it and try to come back to him",
       "Climbing back down, Ruby finds that the z-hatch is now open. Just on the other side of the wall is a small room.",
@@ -463,6 +512,7 @@
   },
   {
     "image": "50.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196321",
     "script": [
       "{fadeOutMusic}5000",
       ">Crawl through the hatch.",
@@ -471,6 +521,7 @@
   },
   {
     "image": "51.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196351",
     "script": [
       ">Explain what each button seems to do",
       "Ruby has no idea what each button seems to do. Perhaps you should interpret.",
@@ -486,6 +537,7 @@
   },
   {
     "image": "52.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196369",
     "script": [
       ">Inspect what looks like a safe on the wall in this room.",
       "It's some sort of metal cabinet, but it's locked up with a padlock.",
@@ -498,6 +550,7 @@
   },
   {
     "image": "53.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3196385",
     "script": [
       "{playMusic}tomTheme",
       "You bring the diagram to Tom. He is already starting to trust you, and with the added incentive that only one \"electrocution\" symbol is present on the diagram, you manage to convince him the other buttons will not administer shocks.",
@@ -512,6 +565,7 @@
   },
   {
     "image": "54.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196421",
     "script": [
       "Moment of truth.",
       "Which button does Tom press?",
@@ -522,6 +576,7 @@
   },
   {
     "image": "55.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196433",
     "script": [
       ">Button 1",
       "{playSound}buttonPress",
@@ -530,6 +585,7 @@
   },
   {
     "image": "56.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196445",
     "script": [
       "Luckily that doesn't seem to be the case anyway!",
       "...but nothing appears to happen. Except that the button sinks into the wall just like the electro-button did, and for a moment, there seems to be a faint, distant \"beep\"..."
@@ -537,6 +593,7 @@
   },
   {
     "image": "57.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196456",
     "script": [
       ">CHECK THE AFOREMENTIONED PANEL",
       "In actuality, the panel seems to be some sort of card reader. It has three lights, all red right now."
@@ -544,6 +601,7 @@
   },
   {
     "image": "58.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196478",
     "script": [
       "{comment}OH SHIT, OH SHIT I JUST GOT IT",
       "{comment}I KNOW WHAT JUST HAPPENED",
@@ -553,6 +611,7 @@
   },
   {
     "image": "59.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196500",
     "script": [
       ">Press the green button.",
       "Ruby presses the DOWN ARROW button, and in the far corner of the room, another hatch opens up.",
@@ -562,6 +621,7 @@
   },
   {
     "image": "60.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196520",
     "script": [
       ">So it IS flipped. Have Tom press button 2 now.",
       "Ruby calls down the open shaft and tells Tom to press button #2 now."
@@ -569,12 +629,14 @@
   },
   {
     "image": "61.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196522",
     "script": [
       "Tom presses the second button, which causes the metal shutters on the Z-Hatch to shut immediately."
     ]
   },
   {
     "image": "62.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196547",
     "script": [
       ">tell him to press button 2 a second time.",
       "Tom presses the button again and the hatch slides open."
@@ -582,6 +644,7 @@
   },
   {
     "image": "63.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196567",
     "script": [
       ">check inventory",
       "Ruby is carrying five items at the moment."
@@ -589,12 +652,14 @@
   },
   {
     "image": "64.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196584",
     "script": [
       ">examine all the symbols closely."
     ]
   },
   {
     "image": "65.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196607",
     "script": [
       ">Try and combine each of the items with each other in any and all ways that would not destroy any of the items.",
       "Using one COIN, the RUBBER GLOVES, the TINY CHEST, and a piece of the BUTTON DIAGRAM, Ruby fashions together the JUNKOTRON MISSILE LAUNCHER! This baby could break through a steel wall!",
@@ -604,6 +669,7 @@
   },
   {
     "image": "66.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196616",
     "script": [
       "NO WAIT, THEY DON'T.",
       "Too bad, I thought you were really on to something there."
@@ -611,6 +677,7 @@
   },
   {
     "image": "67.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196629",
     "script": [
       ">Hey, does the computer have a HELP function?",
       "The help and information prompt is markedly unhelpful. The system seems to be local, rather than connected to any external source. Which means no internet."
@@ -618,6 +685,7 @@
   },
   {
     "image": "68.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196650",
     "script": [
       ">try to see if ruby can reach for the lever on tom's ceiling through the trap door..",
       "Unfortunately, the shaft is too far to reach the lever from above."
@@ -625,6 +693,7 @@
   },
   {
     "image": "69.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196666",
     "script": [
       ">DROP THE CANOPENER DOWN THE CHUTE AND HAVE HIM OPEN THE CAN.",
       "Look out below."
@@ -632,6 +701,7 @@
   },
   {
     "image": "70.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196681",
     "script": [
       "Tom sets to work opening the can.",
       "{comment}",
@@ -640,6 +710,7 @@
   },
   {
     "image": "71.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196693",
     "script": [
       "SUCCESS!",
       "Tom completely mangles the tin can beyond anything useable due to his incompetence in operating a canopener.",
@@ -649,6 +720,7 @@
   },
   {
     "image": "72.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196711",
     "script": [
       ">Have him toss up the card AND the letter opener.",
       "Despite Tom's impressive and manly physique, the card has too much air resistance because of its shape, and refuses to be tossed up the shaft."
@@ -656,6 +728,7 @@
   },
   {
     "image": "73.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#196723",
     "script": [
       ">Toss it so the edge goes into the wind, TOM. DUH.",
       "It's no use. The ACCESS CARD can't be thrown that far without fluttering uselessly out of control.",
@@ -665,6 +738,7 @@
   },
   {
     "image": "74.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196773",
     "script": [
       ">Open up the treasure chest using the letter opener.",
       "Unfortunately, there are STILL no cracks in the treasure chest big enough to pry anything in! It's sealed flush.",
@@ -675,6 +749,7 @@
   },
   {
     "image": "75.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196785",
     "script": [
       ">wire plans",
       "Sadly, there's not NEARLY enough wire left in the barrel to make a cord down, even less considered they'd have to be twisted together well enough to hold. Even with the cannibalized circuit panel, there wouldn't be enough.",
@@ -685,6 +760,7 @@
   },
   {
     "image": "76.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196856",
     "script": [
       ">OK it's obvious there's a way to get the card out without using a method of throwing so let's go look for useful stuff in the Z-hatch room.",
       "Wisely giving up on this poorly-imagined line of thought, Ruby instead descends back to explore the lower levels more, now armed with a heftier inventory.",
@@ -693,6 +769,7 @@
   },
   {
     "image": "77.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196922",
     "script": [
       ">screw plate back",
       "Ruby decides to replace the nameplate before exploring the Z-Room again.",
@@ -701,6 +778,7 @@
   },
   {
     "image": "78.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3196961",
     "script": [
       ">Use ACCESS CARD in SLOT",
       "The card-reader eats the card. It's gone.",
@@ -710,6 +788,7 @@
   },
   {
     "image": "79.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#196981",
     "script": [
       "{fadeOutMusic}",
       ">Go into next room and examine again.",
@@ -723,6 +802,7 @@
   },
   {
     "image": "80.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197016",
     "script": [
       ">Say hello to whoever's behind the door.",
       "Ruby's attempts at conversation are futile. The eyes stare coldly and silently from behind the slot in the door."
@@ -730,6 +810,7 @@
   },
   {
     "image": "81.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197040",
     "script": [
       ">Examine COUCH",
       "The only interesting thing about the couch is how unremarkable it is. It doesn't even have distinct cushions to rifle through.",
@@ -743,6 +824,7 @@
   },
   {
     "image": "82.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197061",
     "script": [
       "Ruby doesn't remember if that handle had been there before or not.",
       "{comment}",
@@ -754,6 +836,7 @@
   },
   {
     "image": "83.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197081",
     "script": [
       ">open the door",
       "Fair enough."
@@ -761,11 +844,13 @@
   },
   {
     "image": "84.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197101",
     "script": [
     ]
   },
   {
     "image": "85.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197139",
     "script": [
       "{playSound}drama",
       "{comment}FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -776,6 +861,7 @@
   },
   {
     "image": "86.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197167",
     "script": [
       "{comment}I wonder if it either wasn't there before, or if there was just a slide covering the hole in the door? Fucking creepy.",
       "{comment}RUN YOU DUMB MOTHER FUCKER! WHATEVER KILLED THAT BEAR IS GONNA KILL YOU FFFFUUUUUUUUUUUUUUUUUUCK!"
@@ -783,6 +869,7 @@
   },
   {
     "image": "87.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197212",
     "script": [
       ">Examine the room/closet where the body was.",
       ">Go into the closet/hallway of death.",
@@ -791,6 +878,7 @@
   },
   {
     "image": "88.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#197225",
     "script": [
       "{playMusic}stitchesTheme",
       "{comment}OH SHIIIIIII-",
@@ -805,6 +893,7 @@
   },
   {
     "image": "89.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197272",
     "script": [
       ">RUN.",
       "Ruby flees the room as fast as she can, but the monstrous thing is hot on her heels snaking after her."
@@ -812,6 +901,7 @@
   },
   {
     "image": "90.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197314",
     "script": [
       ">Shutthehatchshutthehatchshutthehatch",
       "As Ruby re-enters the room, she shouts at Tom to press button 2 again, and fast. Tom's already in a confused panic after hearing the unearthly screaming.",
@@ -821,18 +911,21 @@
   },
   {
     "image": "91.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197346",
     "script": [
       "Tom presses the button."
     ]
   },
   {
     "image": "92.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197376",
     "script": [
       "{fadeOutMusic}5000"
     ]
   },
   {
     "image": "93.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197410",
     "script": [
       ">head back into the Z-Room",
       "Tom opens the hatch just to make sure the monstrous thing is dealt with. No signs of movement come from it or the room beyond, and there is only silence.",
@@ -842,17 +935,20 @@
   },
   {
     "image": "94.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197451",
     "script": [
     ]
   },
   {
     "image": "95.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#197471",
     "script": [
       "Inside the small closet is a ball of string. Ruby takes it with her."
     ]
   },
   {
     "image": "97.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197493",
     "script": [
       ">There's something gold in the remains! Pick it up!",
       "It appears to be a teeny-tiny key."
@@ -860,6 +956,7 @@
   },
   {
     "image": "98.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197517",
     "script": [
       ">USE IT ON THE TINY TREASURECHEST!",
       "It clicks open softly.",
@@ -868,6 +965,7 @@
   },
   {
     "image": "99.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197535",
     "script": [
       ">USE STRING TO RETRIEVE KEYCARD NAO?",
       "Ruby heads back into the room with the cell..."
@@ -875,6 +973,7 @@
   },
   {
     "image": "100.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197545",
     "script": [
       "Ruby calls down the instructions, then lowers the string.",
       "Tom ties the card to the end, and Ruby pulls it back up."
@@ -882,6 +981,7 @@
   },
   {
     "image": "102.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197567",
     "script": [
       "{comment}Okay now what? Do we let Tom out? What do we do after that? What about the lever at the top of Tom's cell?",
       "{comment}",
@@ -890,6 +990,7 @@
   },
   {
     "image": "103.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197598",
     "script": [
       "{comment}Why is Tom IN the cell? why are you here? we didn't ask tom anything because he wasn't talking to us earlier",
       "{comment}TOM WILL KILL YOU RUBY",
@@ -903,6 +1004,7 @@
   },
   {
     "image": "104.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197627",
     "script": [
       "Tom asks Ruby to please let him out.",
       "Tom asks Ruby to please not leave him here.",
@@ -913,6 +1015,7 @@
   },
   {
     "image": "105.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197667",
     "script": [
       ">let him out",
       "Ruby uses the two remaining access cards, and the reader promptly turns green for all three lights."
@@ -920,6 +1023,7 @@
   },
   {
     "image": "106.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197683",
     "script": [
       "{comment}HE'S GOING TO KILL HER! THE WHOLE THING WAS A TRAP!",
       "{comment}",
@@ -935,17 +1039,20 @@
   },
   {
     "image": "107.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197703",
     "script": [
       ">HUG HIM"
     ]
   },
   {
     "image": "108.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197721",
     "script": [
     ]
   },
   {
     "image": "icon.gif",
+    "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#3197738",
     "script": [
       "~To Be Continued~",
       "",
