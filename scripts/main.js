@@ -239,31 +239,50 @@ $(document).ready(function () {
     }
 
     function toggleVolume() {
+        var newSoundVolume;
         switch (soundVolume) {
             case 100:
-                soundVolume = 66;
-                $volumeButton.attr("src", IMAGES_FOLDER + "volumeMedium.png");
+                newSoundVolume = 66;
                 break;
             case 66:
-                soundVolume = 33;
-                $volumeButton.attr("src", IMAGES_FOLDER + "volumeLow.png");
+                newSoundVolume = 33;
                 break;
             case 33:
                 // Mute
-                soundVolume = 0;
+                newSoundVolume = 0;
                 soundManager.stopAll();
-                $volumeButton.attr("src", IMAGES_FOLDER + "volumeMute.png");
                 break;
             case 0:
                 // Un-mute
-                soundVolume = 100;
+                newSoundVolume = 100;
                 if (currentMusic !== null) {
                     currentMusic.play();
                 }
-                $volumeButton.attr("src", IMAGES_FOLDER + "volumeHigh.png");
                 break;
         }
-        setAllVolume(soundVolume);
+        setVolume(newSoundVolume);
+    }
+
+    function setVolume(newSoundVolume) {
+        var buttonImage;
+        if(newSoundVolume > 66) {
+            buttonImage = "volumeHigh.png";
+        } else if (newSoundVolume > 33) {
+            buttonImage = "volumeMedium.png";
+        } else if (newSoundVolume > 0) {
+            buttonImage = "volumeLow.png";
+        } else if (newSoundVolume == 0) {
+            buttonImage = "volumeMute.png";
+        }
+
+        $volumeButton.attr("src", IMAGES_FOLDER + buttonImage);
+        if (currentMusic !== null) {
+            currentMusic.setVolume(newSoundVolume);
+        }
+        if (currentSound !== null) {
+            currentSound.setVolume(newSoundVolume);
+        }
+        soundVolume = newSoundVolume;
     }
 
     // Page load and parsing --------------------------------------------------
@@ -490,14 +509,5 @@ $(document).ready(function () {
 
     function preloadImage(src) {
         $('<img/>')[0].src = src;
-    }
-
-    function setAllVolume(volume) {
-        if (currentMusic !== null) {
-            currentMusic.setVolume(volume);
-        }
-        if (currentSound !== null) {
-            currentSound.setVolume(volume);
-        }
     }
 });
