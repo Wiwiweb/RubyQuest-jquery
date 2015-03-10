@@ -201,7 +201,6 @@ $(document).ready(function () {
             $text.append(paragraph);
             // Skipping text scroll = true
             readLinesRecursive(dataText, 0, paragraph, true);
-            textCurrentlyScrolling = false;
         } else if (pageNb < nbPages) {
             pageNb++;
             loadPage();
@@ -295,6 +294,7 @@ $(document).ready(function () {
             var $arrow = $('<span class="arrow">▶</span>');
             $arrow.click(rightArrow);
             $text.append($arrow);
+            textCurrentlyScrolling = false;
             return
         }
         var line = dataText[lineNb];
@@ -411,7 +411,6 @@ $(document).ready(function () {
                         scrollTextRecursiveLoop($element, line, index, blipClass);
                     }, textScrollInterval);
                 } else {
-                    textCurrentlyScrolling = false;
                     scrollingTimeout = setTimeout(function () {
                         readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
                     }, betweenLinesInterval());
