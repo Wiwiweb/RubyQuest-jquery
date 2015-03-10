@@ -61,13 +61,13 @@ $(document).ready(function () {
             preferFlash: false,
             onready: function () {
                 audioInitialized = true;
-                $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createSounds);
-                $.getJSON(DATA_FOLDER + "textBlips.json", createSounds);
-                initialize(pageData);
+                var deferred1 = $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createSounds);
+                var deferred2 = $.getJSON(DATA_FOLDER + "textBlips.json", createSounds);
+                $.when(deferred1, deferred2).then(initialize);
             },
             ontimeout: function () {
                 audioInitialized = false;
-                initialize(pageData);
+                initialize();
             }
         });
     }
@@ -153,6 +153,29 @@ $(document).ready(function () {
         // Return the hash, or 0 if it's not a number
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
         loadPage();
+        playMusicFromPage();
+    }
+
+    function playMusicFromPage() {
+        var checkingPage = pageNb;
+        mainLoop:
+        while (checkingPage > 0) {
+            var checkingPageData = pageData[checkingPage - 1];
+            var script = checkingPageData["script"];
+            var i;
+            for (i = 0; i < script.length; ++i) {
+                var command = parseCommand(script[i]);
+                if (command[0] == "fadeOut") {
+                    // The last command was a fadeOut, so there should be no music on this page
+                    break mainLoop;
+                } else if (command[0] == "playMusic") {
+                    // The last command was a playMusic, so this music should be played
+                    playMusic(command[1]);
+                    break mainLoop;
+                }
+            }
+            checkingPage--;
+        }
     }
 
     // Buttons ----------------------------------------------------------------
