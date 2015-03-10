@@ -89,6 +89,8 @@ $(document).ready(function () {
         preloadImage(IMAGES_FOLDER + "volumeLow.png");
         preloadImage(IMAGES_FOLDER + "volumeMute.png");
 
+        // Read the page number from the URL
+        loadUrlPage();
         updateArrowVisibility();
 
         // Click controls
@@ -145,6 +147,12 @@ $(document).ready(function () {
         $textScrollBlipsCheckbox.change(function () {
             textBlips = this.checked;
         });
+    }
+
+    function loadUrlPage() {
+        // Return the hash, or 0 if it's not a number
+        pageNb = parseInt(window.location.hash.substr(1)) || 0;
+        loadPage();
     }
 
     // Buttons ----------------------------------------------------------------
@@ -239,6 +247,7 @@ $(document).ready(function () {
     // Page load and parsing --------------------------------------------------
 
     function loadPage() {
+        window.location.hash = pageNb.toString();
         if (currentSound !== null) {
             currentSound.stop();
         }
@@ -250,7 +259,7 @@ $(document).ready(function () {
         var paragraph = $("<p>");
         $text.append(paragraph);
         readLinesRecursive(dataText, 0, paragraph, false);
-        // Preload next images
+        // Preload next image
         preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
     }
 
@@ -362,6 +371,8 @@ $(document).ready(function () {
                 blipClass = blipClass.charAt(0).toUpperCase() + blipClass.slice(1);
             }
 
+            var sound = getBlip(blipClass);
+
             function scrollTextRecursiveLoop(target, message, index, blipClass) {
                 if (index < message.length) {
                     var nextChar = message[index++];
@@ -369,7 +380,7 @@ $(document).ready(function () {
                     if (textBlips && /\S/.test(nextChar)) {
                         charsUntilNextBlip--;
                         if (charsUntilNextBlip == 0) {
-                            playBlip("textBlip" + blipClass);
+                            playBlip(sound);
                             charsUntilNextBlip = charsUntilBlip;
                         }
                     }
@@ -401,11 +412,18 @@ $(document).ready(function () {
 
     // A slightly lighter version of playSound(), since blips are played very frequently
     // and don't need to be remembered
-    function playBlip(soundId) {
+    function playBlip(sound) {
         if (soundVolume !== 0) {
-            var sound = soundManager.getSoundById(soundId);
             sound.play({volume: soundVolume});
         }
+    }
+
+    function getBlip(blipClass) {
+        var sound = soundManager.getSoundById("textBlip" + blipClass);
+        if (sound == null) {
+            sound = soundManager.getSoundById("textBlip");
+        }
+        return sound
     }
 
     function playMusic(soundId) {
