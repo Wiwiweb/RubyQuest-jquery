@@ -9,6 +9,20 @@ var CHAPTER = 1;
 
 $(document).ready(function () {
 
+    // Vars changed by cookies
+    var musicMuted = false;
+    var soundVolume = 100;
+    var textScroll = true;
+    var textBlips = true;
+    var textScrollInterval = 25;
+    var betweenLinesInterval = function () {
+        return textScrollInterval * 16;
+    };
+    var betweenParagraphsInterval = function () {
+        return textScrollInterval * 32;
+    };
+
+    // Vars that track the state of the script
     var audioInitialized = false;
     var commentsEnabled = true;
     var nbPages = 0;
@@ -17,15 +31,12 @@ $(document).ready(function () {
     var currentSound = null;
     var pageNb = 0;
 
-    var musicMuted = false;
-    var soundVolume = 100;
-    var textScroll = true;
-    var textBlips = true;
-
+    // Timeouts saved so we can clear them
     var fadeOutMusicTimeout = null;
     var scrollingTimeout = null;
     var textCurrentlyScrolling = false;
 
+    // jQuery selectors
     var $leftArrow = $("#left-arrow");
     var $rightArrow = $("#right-arrow");
     var $musicButton = $("#music-button");
@@ -38,15 +49,7 @@ $(document).ready(function () {
     var $advancedOptionsMenu = $("#advanced-options-menu");
     var $textScrollCheckbox = $("#text-scroll-checkbox");
     var $textScrollIntervalTextbox = $("#text-scroll-interval-textbox");
-    var $textScrollBlipsCheckbox = $("#text-scroll-blips-checkbox");
-
-    var textScrollInterval = 25;
-    var betweenLinesInterval = function () {
-        return textScrollInterval * 16;
-    };
-    var betweenParagraphsInterval = function () {
-        return textScrollInterval * 32;
-    };
+    var $textBlipsCheckbox = $("#text-blips-checkbox");
 
     var charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
 
@@ -89,10 +92,6 @@ $(document).ready(function () {
         preloadImage(IMAGES_FOLDER + "volumeLow.png");
         preloadImage(IMAGES_FOLDER + "volumeMute.png");
 
-        // Read the page number from the URL
-        loadUrlPage();
-        updateArrowVisibility();
-
         // Click controls
         $leftArrow.click(leftArrow);
         $rightArrow.click(rightArrow);
@@ -133,49 +132,84 @@ $(document).ready(function () {
 
         $textScrollCheckbox.change(function () {
             textScroll = this.checked;
+            $.cookie("ruby_textScroll", this.checked, {expires: 30});
             $textScrollIntervalTextbox.prop('disabled', !textScroll);
             $("#text-scroll-interval-textbox-label").toggleClass('disabled', !textScroll);
-            $textScrollBlipsCheckbox.prop('disabled', !textScroll);
-            $("#text-scroll-blips-checkbox-label").toggleClass('disabled', !textScroll);
+            $textBlipsCheckbox.prop('disabled', !textScroll);
+            $("#text-blips-checkbox-label").toggleClass('disabled', !textScroll);
         });
 
         $textScrollIntervalTextbox.change(function () {
+            $.cookie("ruby_textScrollInterval", $(this).val(), {expires: 30});
             textScrollInterval = $(this).val();
             charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
         });
 
-        $textScrollBlipsCheckbox.change(function () {
+        $textBlipsCheckbox.change(function () {
+            $.cookie("ruby_textBlips", this.checked, {expires: 30});
             textBlips = this.checked;
         });
+
+
+        // Read cookies
+        var cookieMusicMuted = $.cookie("ruby_musicMuted");
+        var cookieVolume = $.cookie("ruby_volume");
+        var cookieTextScroll = $.cookie("ruby_textScroll");
+        var cookieTextScrollInterval = $.cookie("ruby_textScrollInterval");
+        var cookieTextBlips = $.cookie("ruby_textBlips");
+        if (typeof cookieTextScroll !== 'undefined' && cookieMusicMuted == 'true') {
+            toggleMusic();
+        }
+        if (typeof cookieVolume !== 'undefined') {
+            setVolume(parseInt(cookieVolume));
+        }
+        if (typeof cookieTextScroll !== 'undefined' && cookieTextScroll == 'false') {
+            $textScrollCheckbox.prop('checked', false);
+            $textScrollCheckbox.trigger('change');
+        }
+        if (typeof cookieTextScrollInterval !== 'undefined') {
+            $textScrollIntervalTextbox.val(parseInt(cookieTextScrollInterval));
+            $textScrollIntervalTextbox.trigger('change');
+        }
+        if (typeof cookieTextBlips !== 'undefined' && cookieTextBlips == 'false') {
+            $textBlipsCheckbox.prop('checked', false);
+            $textBlipsCheckbox.trigger('change');
+        }
+
+        // Read the page number from the URL
+        loadUrlPage();
+        updateArrowVisibility();
     }
 
     function loadUrlPage() {
         // Return the hash, or 0 if it's not a number
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
-        loadPage();
-        playMusicFromPage();
+        if (pageNb > 0) {
+            loadPage();
+            playMusicFromPage();
+        }
     }
 
     function playMusicFromPage() {
         var checkingPage = pageNb;
         mainLoop:
-        while (checkingPage > 0) {
-            var checkingPageData = pageData[checkingPage - 1];
-            var script = checkingPageData["script"];
-            var i;
-            for (i = 0; i < script.length; ++i) {
-                var command = parseCommand(script[i]);
-                if (command[0] == "fadeOut") {
-                    // The last command was a fadeOut, so there should be no music on this page
-                    break mainLoop;
-                } else if (command[0] == "playMusic") {
-                    // The last command was a playMusic, so this music should be played
-                    playMusic(command[1]);
-                    break mainLoop;
+            while (checkingPage > 0) {
+                var checkingPageData = pageData[checkingPage - 1];
+                var script = checkingPageData["script"];
+                var i;
+                for (i = 0; i < script.length; ++i) {
+                    var command = parseCommand(script[i]);
+                    if (command[0] == "fadeOut") {
+                        // The last command was a fadeOut, so there should be no music on this page
+                        break mainLoop;
+                    } else if (command[0] == "playMusic") {
+                        // The last command was a playMusic, so this music should be played
+                        playMusic(command[1]);
+                        break mainLoop;
+                    }
                 }
+                checkingPage--;
             }
-            checkingPage--;
-        }
     }
 
     // Buttons ----------------------------------------------------------------
@@ -236,6 +270,7 @@ $(document).ready(function () {
             }
             $musicButton.attr("src", IMAGES_FOLDER + "noMusic.png");
         }
+        $.cookie("ruby_musicMuted", musicMuted, {expires: 30});
     }
 
     function toggleVolume() {
@@ -260,12 +295,13 @@ $(document).ready(function () {
                 }
                 break;
         }
+        $.cookie("ruby_volume", newSoundVolume, {expires: 30});
         setVolume(newSoundVolume);
     }
 
     function setVolume(newSoundVolume) {
         var buttonImage;
-        if(newSoundVolume > 66) {
+        if (newSoundVolume > 66) {
             buttonImage = "volumeHigh.png";
         } else if (newSoundVolume > 33) {
             buttonImage = "volumeMedium.png";
