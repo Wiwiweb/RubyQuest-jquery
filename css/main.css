@@ -56,6 +56,11 @@ h1 {
     cursor: pointer;
 }
 
+#continue-button {
+    cursor: pointer;
+    display: none;
+}
+
 .button {
     height: 80%;
     position: relative;
@@ -114,25 +119,45 @@ h1 {
 }
 
 @-webkit-keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @-webkit-keyframes blinker {
-    0% { opacity: 0.0; }
-    50% { opacity: 1.0; }
-    100% { opacity: 0.0; }
+    0% {
+        opacity: 0.0;
+    }
+    50% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.0;
+    }
 }
 
 @keyframes blinker {
-    0% { opacity: 0.0; }
-    50% { opacity: 1.0; }
-    100% { opacity: 0.0; }
+    0% {
+        opacity: 0.0;
+    }
+    50% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.0;
+    }
 }
 
 @media (max-width: 320px), (max-aspect-ratio: 1/1) {

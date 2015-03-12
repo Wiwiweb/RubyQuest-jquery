@@ -36,6 +36,11 @@ $(document).ready(function () {
     var scrollingTimeout = null;
     var textCurrentlyScrolling = false;
 
+    // Defer variables for asynchronous management
+    var chapterDataLoaded;
+    var audioDataLoaded;
+    var audioBlipDataLoaded;
+
     // jQuery selectors
     var $leftArrow = $("#left-arrow");
     var $rightArrow = $("#right-arrow");
@@ -47,6 +52,7 @@ $(document).ready(function () {
     var $text = $("#text");
     var $blackoutOverlay = $("#blackout-overlay");
     var $newGameButton = $("#new-game-button");
+    var $continueButton = $("#continue-button");
 
     var $advancedOptionsMenu = $("#advanced-options-menu");
     var $textScrollCheckbox = $("#text-scroll-checkbox");
@@ -55,44 +61,62 @@ $(document).ready(function () {
 
     var charsUntilBlip = Math.floor(TEXT_BLIP_INTERVAL / textScrollInterval);
 
-    $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializeAudio);
+    initializeMainMenu();
+    chapterDataLoaded = $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + ".json", initializePageLoad);
+    initializeAudio();
 
     // Initializing -----------------------------------------------------------
 
-    function initializeAudio(pageDataLocal) {
-        pageData = pageDataLocal;
-        soundManager.setup({
-            url: '/swf/',
-            preferFlash: false,
-            onready: function () {
-                audioInitialized = true;
-                var deferred1 = $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createSounds);
-                var deferred2 = $.getJSON(DATA_FOLDER + "textBlips.json", createSounds);
-                $.when(deferred1, deferred2).then(initialize);
-            },
-            ontimeout: function () {
-                audioInitialized = false;
-                initialize();
-            }
-        });
-    }
-
-    function createSounds(soundData) {
-        for (var i = 0; i < soundData.length; i++) {
-            soundData[i]["url"] = SOUND_FOLDER + soundData[i]["url"];
-            soundData[i]["autoLoad"] = true;
-            soundManager.createSound(soundData[i]);
-        }
-    }
-
-    function initialize() {
-        nbPages = pageData.length;
-
+    function initializeMainMenu() {
         // Preload button images
         preloadImage(IMAGES_FOLDER + "noMusic.png");
         preloadImage(IMAGES_FOLDER + "volumeMedium.png");
         preloadImage(IMAGES_FOLDER + "volumeLow.png");
         preloadImage(IMAGES_FOLDER + "volumeMute.png");
+
+        // Read cookies
+        var cookieSavedPage = $.cookie("ruby_savedPage");
+        var cookieMusicMuted = $.cookie("ruby_musicMuted");
+        var cookieVolume = $.cookie("ruby_volume");
+        var cookieTextScroll = $.cookie("ruby_textScroll");
+        var cookieTextScrollInterval = $.cookie("ruby_textScrollInterval");
+        var cookieTextBlips = $.cookie("ruby_textBlips");
+
+        if (typeof cookieSavedPage !== 'undefined') {
+            var parsedSavedPage = parseInt(cookieSavedPage);
+            if (!isNaN(parsedSavedPage)) {
+                $continueButton.text("Continue (Page " + parsedSavedPage + ")");
+                $continueButton.click(function () {
+                    pageNb = parsedSavedPage;
+                    exitMainMenu();
+                });
+                $continueButton.show();
+            }
+        }
+        if (typeof cookieTextScroll !== 'undefined' && cookieMusicMuted == 'true') {
+            toggleMusic();
+        }
+        if (typeof cookieVolume !== 'undefined') {
+            var parsedVolume = parseInt(cookieVolume);
+            if (!isNaN(parsedVolume)) {
+                setVolume(parsedVolume);
+            }
+        }
+        if (typeof cookieTextScroll !== 'undefined' && cookieTextScroll == 'false') {
+            $textScrollCheckbox.prop('checked', false);
+            $textScrollCheckbox.trigger('change');
+        }
+        if (typeof cookieTextScrollInterval !== 'undefined') {
+            var parsedTextScrollInterval = parseInt(cookieTextScrollInterval);
+            if (!isNaN(parsedTextScrollInterval)) {
+                $textScrollIntervalTextbox.val(parsedTextScrollInterval);
+                $textScrollIntervalTextbox.trigger('change');
+            }
+        }
+        if (typeof cookieTextBlips !== 'undefined' && cookieTextBlips == 'false') {
+            $textBlipsCheckbox.prop('checked', false);
+            $textBlipsCheckbox.trigger('change');
+        }
 
         // Click controls
         $leftArrow.click(leftArrow);
@@ -155,49 +179,55 @@ $(document).ready(function () {
             $.cookie("ruby_textBlips", this.checked, {expires: 30});
             textBlips = this.checked;
         });
+    }
 
-
-        // Read cookies
-        var cookieMusicMuted = $.cookie("ruby_musicMuted");
-        var cookieVolume = $.cookie("ruby_volume");
-        var cookieTextScroll = $.cookie("ruby_textScroll");
-        var cookieTextScrollInterval = $.cookie("ruby_textScrollInterval");
-        var cookieTextBlips = $.cookie("ruby_textBlips");
-        if (typeof cookieTextScroll !== 'undefined' && cookieMusicMuted == 'true') {
-            toggleMusic();
-        }
-        if (typeof cookieVolume !== 'undefined') {
-            setVolume(parseInt(cookieVolume));
-        }
-        if (typeof cookieTextScroll !== 'undefined' && cookieTextScroll == 'false') {
-            $textScrollCheckbox.prop('checked', false);
-            $textScrollCheckbox.trigger('change');
-        }
-        if (typeof cookieTextScrollInterval !== 'undefined') {
-            $textScrollIntervalTextbox.val(parseInt(cookieTextScrollInterval));
-            $textScrollIntervalTextbox.trigger('change');
-        }
-        if (typeof cookieTextBlips !== 'undefined' && cookieTextBlips == 'false') {
-            $textBlipsCheckbox.prop('checked', false);
-            $textBlipsCheckbox.trigger('change');
-        }
-
+    function initializePageLoad(pageDataLocal) {
+        pageData = pageDataLocal;
+        nbPages = pageData.length;
         // Read the page number from the URL if there is one
-        loadUrlPage();
+        loadUrlPageIfNeeded();
+    }
+
+    function initializeAudio() {
+        soundManager.setup({
+            url: '/swf/',
+            preferFlash: false,
+            onready: function () {
+                audioInitialized = true;
+                audioDataLoaded = $.getJSON(DATA_FOLDER + "chapter" + CHAPTER + "audio.json", createSounds);
+                audioBlipDataLoaded = $.getJSON(DATA_FOLDER + "textBlips.json", createSounds);
+            },
+            ontimeout: function () {
+                audioInitialized = false;
+                audioDataLoaded.done();
+                audioBlipDataLoaded.done();
+            }
+        });
+    }
+
+    function createSounds(soundData) {
+        for (var i = 0; i < soundData.length; i++) {
+            soundData[i]["url"] = SOUND_FOLDER + soundData[i]["url"];
+            soundData[i]["autoLoad"] = true;
+            soundManager.createSound(soundData[i]);
+        }
     }
 
     function exitMainMenu() {
         $blackoutOverlay.toggleClass('hidden');
         setTimeout(function () {
-            loadPage();
-            $blackoutOverlay.toggleClass('hidden');
+            // If by any chance everything is not loaded yet, delay the fadein until everything is ready
+            $.when(chapterDataLoaded, audioDataLoaded, audioBlipDataLoaded).then(function () {
+                loadPage();
+                $blackoutOverlay.toggleClass('hidden');
+            });
         }, 1500);
     }
 
-    function loadUrlPage() {
+    function loadUrlPageIfNeeded() {
         // Return the hash, or 0 if it's not a number
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
-        if (pageNb > 0) {
+        if (pageNb > 1) {
             exitMainMenu();
             playMusicFromPage();
         }
@@ -336,6 +366,7 @@ $(document).ready(function () {
 
     function loadPage() {
         window.location.hash = pageNb.toString();
+        $.cookie("ruby_savedPage", pageNb, {expires: 60});
         updateArrowVisibility();
         if (currentSound !== null) {
             currentSound.stop();
