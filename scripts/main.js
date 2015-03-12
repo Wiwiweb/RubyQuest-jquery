@@ -230,7 +230,7 @@ $(document).ready(function () {
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
         if (pageNb > 1) {
             exitMainMenu();
-            playMusicFromPage();
+            $.when(audioDataLoaded).then(playMusicFromPage);
         }
     }
 
