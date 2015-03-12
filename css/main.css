@@ -95,10 +95,14 @@ h1 {
 }
 
 /* We can't animate the display property, so we animate opacity then reduce height to 0 at the end */
-.hidden {
+.hidden-fading {
     opacity: 0 !important;
     height: 0 !important;
     transition-timing-function: linear, step-end !important;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .comment {

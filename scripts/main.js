@@ -125,7 +125,7 @@ $(document).ready(function () {
         $volumeButton.click(toggleVolume);
         $advancedOptionsButton.click(function (event) {
             event.stopPropagation();
-            $advancedOptionsMenu.toggleClass("hidden");
+            $advancedOptionsMenu.toggleClass("hidden-fading");
         });
         $newGameButton.click(function () {
             pageNb = 1;
@@ -214,12 +214,13 @@ $(document).ready(function () {
     }
 
     function exitMainMenu() {
-        $blackoutOverlay.toggleClass('hidden');
+        $blackoutOverlay.toggleClass('hidden-fading');
         setTimeout(function () {
             // If by any chance everything is not loaded yet, delay the fadein until everything is ready
             $.when(chapterDataLoaded, audioDataLoaded, audioBlipDataLoaded).then(function () {
-                loadPage();
-                $blackoutOverlay.toggleClass('hidden');
+                $image.removeClass("hidden");
+                loadPage(true);
+                $blackoutOverlay.toggleClass('hidden-fading');
             });
         }, 1500);
     }
@@ -261,7 +262,7 @@ $(document).ready(function () {
         if (pageNb > 1) {
             clearTimeout(scrollingTimeout);
             pageNb--;
-            loadPage();
+            loadPage(false);
             event.preventDefault();
         }
     }
@@ -279,7 +280,7 @@ $(document).ready(function () {
             readLinesRecursive(dataText, 0, paragraph, true);
         } else if (pageNb < nbPages) {
             pageNb++;
-            loadPage();
+            loadPage(false);
             event.preventDefault();
         }
     }
@@ -364,7 +365,7 @@ $(document).ready(function () {
 
     // Page load and parsing --------------------------------------------------
 
-    function loadPage() {
+    function loadPage(delayLineReading) {
         window.location.hash = pageNb.toString();
         $.cookie("ruby_savedPage", pageNb, {expires: 60});
         updateArrowVisibility();
@@ -378,7 +379,13 @@ $(document).ready(function () {
         var dataText = currentPageData["script"];
         var paragraph = $("<p>");
         $text.append(paragraph);
-        readLinesRecursive(dataText, 0, paragraph, false);
+        if (delayLineReading && textScroll) {
+            setTimeout(function () {
+                readLinesRecursive(dataText, 0, paragraph, false);
+            }, 1500);
+        } else {
+            readLinesRecursive(dataText, 0, paragraph, false);
+        }
         // Preload next image
         preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
     }
