@@ -45,6 +45,8 @@ $(document).ready(function () {
     var $originalUrlLink = $("#original-url-link");
     var $image = $("#image");
     var $text = $("#text");
+    var $blackoutOverlay = $("#blackout-overlay");
+    var $newGameButton = $("#new-game-button");
 
     var $advancedOptionsMenu = $("#advanced-options-menu");
     var $textScrollCheckbox = $("#text-scroll-checkbox");
@@ -99,12 +101,16 @@ $(document).ready(function () {
         $volumeButton.click(toggleVolume);
         $advancedOptionsButton.click(function (event) {
             event.stopPropagation();
-            $advancedOptionsMenu.toggleClass("opacity-hidden");
+            $advancedOptionsMenu.toggleClass("hidden");
+        });
+        $newGameButton.click(function () {
+            pageNb = 1;
+            exitMainMenu();
         });
 
         // Keyboard controls
-        $(document).keydown(function (e) {
-            var key = e.keyCode;
+        $(document).keydown(function (event) {
+            var key = event.keyCode;
             if (key == 37) {  // Left arrow
                 leftArrow();
             }
@@ -122,7 +128,7 @@ $(document).ready(function () {
 
         // Hide options menu when clicking elsewhere
         $("html").click(function () {
-            $advancedOptionsMenu.addClass("opacity-hidden");
+            $advancedOptionsMenu.addClass("hidden");
         });
 
         // Override previous click binding so that clicking on the menu itself doesn't hide it
@@ -176,16 +182,23 @@ $(document).ready(function () {
             $textBlipsCheckbox.trigger('change');
         }
 
-        // Read the page number from the URL
+        // Read the page number from the URL if there is one
         loadUrlPage();
-        updateArrowVisibility();
+    }
+
+    function exitMainMenu() {
+        $blackoutOverlay.toggleClass('hidden');
+        setTimeout(function () {
+            loadPage();
+            $blackoutOverlay.toggleClass('hidden');
+        }, 1500);
     }
 
     function loadUrlPage() {
         // Return the hash, or 0 if it's not a number
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
         if (pageNb > 0) {
-            loadPage();
+            exitMainMenu();
             playMusicFromPage();
         }
     }
@@ -219,7 +232,6 @@ $(document).ready(function () {
             clearTimeout(scrollingTimeout);
             pageNb--;
             loadPage();
-            updateArrowVisibility();
             event.preventDefault();
         }
     }
@@ -238,7 +250,6 @@ $(document).ready(function () {
         } else if (pageNb < nbPages) {
             pageNb++;
             loadPage();
-            updateArrowVisibility();
             event.preventDefault();
         }
     }
@@ -249,7 +260,7 @@ $(document).ready(function () {
         } else {
             $leftArrow.css("visibility", "visible");
         }
-        if (pageNb >= nbPages) {
+        if (pageNb >= nbPages && pageNb != 0) {
             $rightArrow.css("visibility", "hidden");
         } else {
             $rightArrow.css("visibility", "visible");
@@ -325,6 +336,7 @@ $(document).ready(function () {
 
     function loadPage() {
         window.location.hash = pageNb.toString();
+        updateArrowVisibility();
         if (currentSound !== null) {
             currentSound.stop();
         }
