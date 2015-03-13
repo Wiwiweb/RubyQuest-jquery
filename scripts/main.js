@@ -118,9 +118,7 @@ $(document).ready(function () {
             $textBlipsCheckbox.trigger('change');
         }
 
-        // Click controls
-        $leftArrow.click(leftArrow);
-        $rightArrow.click(rightArrow);
+        // Main menu and options buttons
         $musicButton.click(toggleMusic);
         $volumeButton.click(toggleVolume);
         $advancedOptionsButton.click(function (event) {
@@ -131,22 +129,6 @@ $(document).ready(function () {
             pageNb = 1;
             exitMainMenu();
         });
-
-        // Keyboard controls
-        $(document).keydown(function (event) {
-            var key = event.keyCode;
-            if (key == 37) {  // Left arrow
-                leftArrow();
-            }
-            if (key == 39) {  // Right arrow
-                rightArrow();
-            }
-        });
-
-        // Swipe controls
-        var swipeHammer = new Hammer($(document)[0]);
-        swipeHammer.on("swiperight", leftArrow);
-        swipeHammer.on("swipeleft", rightArrow);
 
         // Other buttons
 
@@ -221,14 +203,37 @@ $(document).ready(function () {
                 $image.removeClass("hidden");
                 loadPage(true);
                 $blackoutOverlay.toggleClass('hidden-fading');
+                setTimeout(initializeChangePageControls, 1500);
             });
         }, 1500);
+    }
+
+    function initializeChangePageControls() {
+        // Click controls
+        $leftArrow.click(leftArrow);
+        $rightArrow.click(rightArrow);
+
+        // Keyboard controls
+        $(document).keydown(function (event) {
+            var key = event.keyCode;
+            if (key == 37) {  // Left arrow
+                leftArrow();
+            }
+            if (key == 39) {  // Right arrow
+                rightArrow();
+            }
+        });
+
+        // Swipe controls
+        var swipeHammer = new Hammer($(document)[0]);
+        swipeHammer.on("swiperight", leftArrow);
+        swipeHammer.on("swipeleft", rightArrow);
     }
 
     function loadUrlPageIfNeeded() {
         // Return the hash, or 0 if it's not a number
         pageNb = parseInt(window.location.hash.substr(1)) || 0;
-        if (pageNb > 1) {
+        if (pageNb > 0) {
             exitMainMenu();
             $.when(audioDataLoaded).then(playMusicFromPage);
         }
@@ -259,6 +264,7 @@ $(document).ready(function () {
     // Buttons ----------------------------------------------------------------
 
     function leftArrow() {
+        // The blackoutOverlay check is to make sure we can't use keyboard/slide controls while the screen is fading
         if (pageNb > 1) {
             clearTimeout(scrollingTimeout);
             pageNb--;
@@ -400,7 +406,7 @@ $(document).ready(function () {
             $arrow.click(rightArrow);
             $text.append($arrow);
             textCurrentlyScrolling = false;
-            return
+            return;
         }
         var line = dataText[lineNb];
         var command = parseCommand(line);
@@ -473,7 +479,7 @@ $(document).ready(function () {
         if (results == null) {
             return [null, text];
         } else {
-            return [results[1], results[2]]
+            return [results[1], results[2]];
         }
     }
 
@@ -550,7 +556,7 @@ $(document).ready(function () {
         if (sound == null) {
             sound = soundManager.getSoundById("textBlip");
         }
-        return sound
+        return sound;
     }
 
     function playMusic(soundId) {
