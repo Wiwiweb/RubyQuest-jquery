@@ -262,7 +262,7 @@ $(document).ready(function () {
                 var i;
                 for (i = 0; i < script.length; ++i) {
                     var command = parseCommand(script[i]);
-                    if (command[0] == "fadeOut") {
+                    if (command[0] == "fadeOutMusic") {
                         // The last command was a fadeOut, so there should be no music on this page
                         break mainLoop;
                     } else if (command[0] == "playMusic") {
@@ -577,11 +577,16 @@ $(document).ready(function () {
     }
 
     function playMusic(soundId) {
+        var music = soundManager.getSoundById(soundId);
+
         if (currentMusic !== null) {
+            if (currentMusic == music) {
+                // If asked to play again the same music, let the current one continue and do nothing
+                return;
+            }
             currentMusic.stop();
             clearTimeout(fadeOutMusicTimeout);
         }
-        var music = soundManager.getSoundById(soundId);
         // If the music is muted, we still need to remember which music is supposed to be playing (currentMusic)
         // This is why the whole function is not inside this conditional
         if (!musicMuted) {
