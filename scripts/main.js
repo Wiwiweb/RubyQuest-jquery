@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     // Vars that track the state of the script
     var audioInitialized = false;
-    var commentsEnabled = true;
+    var readerComments = true;
     var nbPages = 0;
     var pageData;
     var currentMusic = null;
@@ -55,6 +55,7 @@ $(document).ready(function () {
     var $continueButton = $("#continue-button");
 
     var $advancedOptionsMenu = $("#advanced-options-menu");
+    var $readerCommentsCheckbox = $("#reader-comments-checkbox");
     var $textScrollCheckbox = $("#text-scroll-checkbox");
     var $textScrollIntervalTextbox = $("#text-scroll-interval-textbox");
     var $textBlipsCheckbox = $("#text-blips-checkbox");
@@ -78,6 +79,7 @@ $(document).ready(function () {
         var cookieSavedPage = $.cookie("ruby_savedPage");
         var cookieMusicMuted = $.cookie("ruby_musicMuted");
         var cookieVolume = $.cookie("ruby_volume");
+        var cookieReaderComments = $.cookie("ruby_readerComments");
         var cookieTextScroll = $.cookie("ruby_textScroll");
         var cookieTextScrollInterval = $.cookie("ruby_textScrollInterval");
         var cookieTextBlips = $.cookie("ruby_textBlips");
@@ -101,6 +103,11 @@ $(document).ready(function () {
             if (!isNaN(parsedVolume)) {
                 setVolume(parsedVolume);
             }
+        }
+        if (typeof cookieReaderComments !== 'undefined' && cookieReaderComments == 'false') {
+            $readerCommentsCheckbox.prop('checked', false);
+            readerComments = $readerCommentsCheckbox.checked;
+            // Triggering the change event only reloads the page, which is not necessary on website load
         }
         if (typeof cookieTextScroll !== 'undefined' && cookieTextScroll == 'false') {
             $textScrollCheckbox.prop('checked', false);
@@ -134,12 +141,18 @@ $(document).ready(function () {
 
         // Hide options menu when clicking elsewhere
         $("html").click(function () {
-            $advancedOptionsMenu.addClass("hidden");
+            $advancedOptionsMenu.addClass("hidden-fading");
         });
 
         // Override previous click binding so that clicking on the menu itself doesn't hide it
         $advancedOptionsMenu.click(function (event) {
             event.stopPropagation();
+        });
+
+        $readerCommentsCheckbox.change(function() {
+            readerComments = this.checked;
+            $.cookie("ruby_readerComments", this.checked, {expires: 30});
+            loadPage(false);
         });
 
         $textScrollCheckbox.change(function () {
@@ -412,7 +425,7 @@ $(document).ready(function () {
         var command = parseCommand(line);
         if (command[0] === null && command[1] == "") {
             // New paragraph
-            if (command[0] != "comment" || (command[0] == "comment" && commentsEnabled)) {
+            if (command[0] != "comment" || (command[0] == "comment" && readerComments)) {
                 $paragraph = $("<p>");
                 $text.append($paragraph);
             }
@@ -432,9 +445,12 @@ $(document).ready(function () {
                     displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll, cssClass);
                     break;
                 case "comment":
-                    if (commentsEnabled) {
+                    if (readerComments) {
                         $span = appendInlineTags($paragraph, "comment");
                         displayText($span, command[1], dataText, lineNb, $paragraph, skippingTextScroll, "comment");
+                    } else {
+                        // Completely skip that line, no timeout
+                        readLinesRecursive(dataText, lineNb + 1, $paragraph, skippingTextScroll);
                     }
                     break;
                 case "playSound":
