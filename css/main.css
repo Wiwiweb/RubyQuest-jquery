@@ -11,19 +11,30 @@ body {
     margin: 0;
 }
 
-h1 {
-    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+#title {
+    font-family: "Pixelmix", "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    font-size: 500%;
+    text-align: center;
+    margin: 1.5em 0;
+}
+
+.main-menu-option {
+    font-family: "Pixelmix", "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    font-size: 150%;
+    text-align: center;
+    margin: 1em 0;
+    cursor: pointer;
 }
 
 #image {
     float: left;
-    height: 85%;
+    height: 88%;
 }
 
 #text {
     overflow: hidden;
     height: 88%;
-    font-size: 120%;
+    font-size: 150%;
     padding-left: 1em;
     padding-right: 1em;
     overflow-y: auto;
@@ -49,15 +60,10 @@ h1 {
     width: 100%;
     height: 100%;
     background-color: black;
-    transition: opacity 1.5s linear, height 1.5s step-start;
-}
-
-#new-game-button {
-    cursor: pointer;
+    transition: opacity 1.5s linear, top 1.5s step-start;
 }
 
 #continue-button {
-    cursor: pointer;
     display: none;
 }
 
@@ -87,17 +93,18 @@ h1 {
     width: 20em;
     background-color: gray;
     border: solid 2px white;
-    transition: opacity .5s linear, height .5s step-start;
+    transition: opacity .5s linear, top .5s step-start;
 }
 
 .disabled {
     color: #bfbfbf;
 }
 
-/* We can't animate the display property, so we animate opacity then reduce height to 0 at the end */
+/* We can't animate the display property,
+   so we animate opacity then hide the div off the top of the screen at the end */
 .hidden-fading {
     opacity: 0 !important;
-    height: 0 !important;
+    top: -2000px !important;
     transition-timing-function: linear, step-end !important;
 }
 
@@ -175,10 +182,21 @@ h1 {
     #text {
         height: 40%;
         width: 100%;
-        font-size: 130%;
     }
 
     #footer {
         height: 10%;
     }
+}
+
+@media (max-aspect-ratio: 4/3) {
+    #text {
+        font-size: 120%;
+    }
+}
+
+@font-face {
+    font-family: 'Pixelmix';
+    src: url('../fonts/pixelmix-webfont.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/pixelmix-webfont.woff2') format('woff2'), /* Super Modern Browsers */ url('../fonts/pixelmix-webfont.woff') format('woff'), /* Pretty Modern Browsers */ url('../fonts/pixelmix-webfont.ttf') format('truetype'), /* Safari, Android, iOS */ url('../fonts/pixelmix-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
