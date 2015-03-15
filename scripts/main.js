@@ -149,7 +149,7 @@ $(document).ready(function () {
             event.stopPropagation();
         });
 
-        $readerCommentsCheckbox.change(function() {
+        $readerCommentsCheckbox.change(function () {
             readerComments = this.checked;
             $.cookie("ruby_readerComments", this.checked, {expires: 30});
             loadPage(false);
@@ -210,6 +210,7 @@ $(document).ready(function () {
 
     function exitMainMenu() {
         $blackoutOverlay.toggleClass('hidden-fading');
+        preloadImage(PAGE_IMAGES_FOLDER + pageData[pageNb]["image"]);
         setTimeout(function () {
             // If by any chance everything is not loaded yet, delay the fadein until everything is ready
             $.when(chapterDataLoaded, audioDataLoaded, audioBlipDataLoaded).then(function () {
