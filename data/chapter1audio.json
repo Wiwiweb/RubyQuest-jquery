@@ -1,19 +1,27 @@
 [
   {
     "id": "buttonPress",
-    "url": "buttonPress.wav"
+    "url": "buttonPress.ogg"
+  },
+  {
+    "id": "click",
+    "url": "click.ogg"
   },
   {
     "id": "drama",
-    "url": "drama.flac"
+    "url": "drama.ogg"
   },
   {
     "id": "hatchOpen",
-    "url": "hatchOpen.mp3"
+    "url": "hatchOpen.ogg"
+  },
+  {
+    "id": "canOpener",
+    "url": "canOpener.ogg"
   },
   {
     "id": "shutterOpen",
-    "url": "shutterOpen.mp3"
+    "url": "shutterOpen.ogg"
   },
   {
     "id": "caveAmbient",
@@ -23,6 +31,16 @@
   {
     "id": "tomTheme",
     "url": "music/02_The_Room_is_Boring_looped.ogg",
+    "loops": 99
+  },
+  {
+    "id": "zHatchMonster",
+    "url": "music/04_Z-Hatch_Monster.ogg",
+    "followup": "zHatchMonsterLoop"
+  },
+  {
+    "id": "zHatchMonsterLoop",
+    "url": "music/04_Z-Hatch_Monster_loop.ogg",
     "loops": 99
   }
 ]

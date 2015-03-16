@@ -102,7 +102,7 @@
     "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3195067/#3195363",
     "script": [
       ">use can opener on can thing in the back.",
-      "{playSound}hatchOpen",
+      "{playSound}canOpener",
       "The barrel's lid comes up with the can-opener's tenacious efforts!",
       "Inside there's a few small lengths of BARE ELECTRICAL WIRE, but nothing else."
     ]
@@ -818,7 +818,7 @@
       ">try to remove the eye, use the letter opener to pry the frame.",
       "Ruby fiddles with the letter opener, and in doing so finds out that it fits perfectly into the empty pupil of the eyeball painting.",
       "It locks into position! How about that?",
-      "{plauSound}click",
+      "{playSound}click",
       "A soft \"click\" comes from the door."
     ]
   },
@@ -880,7 +880,7 @@
     "image": "88.gif",
     "originalUrl": "http://suptg.thisisnotatrueending.com/archive/3196421/#197225",
     "script": [
-      "{playMusic}stitchesTheme",
+      "{playMusic}zHatchMonster",
       "{comment}OH SHIIIIIII-",
       "{comment}AAAAAAIIIIIIIIIIIIIIIIIIIIIIIIIIEEEEEEEEEEE BACK IN THE HATCH NOW SHIT SHIT SHIT.",
       "{comment}Use letter opener, stab stab stab.",

@@ -28,6 +28,7 @@ $(document).ready(function () {
     var nbPages = 0;
     var pageData;
     var currentMusic = null;
+    var currentMusicLoop = null;
     var currentSound = null;
     var pageNb = 0;
 
@@ -204,8 +205,22 @@ $(document).ready(function () {
         for (var i = 0; i < soundData.length; i++) {
             soundData[i]["url"] = SOUND_FOLDER + soundData[i]["url"];
             soundData[i]["autoLoad"] = true;
+            if ("followup" in soundData[i]) {
+                var followUpSoundUrl = soundData[i]["followup"];
+                soundData[i]["onfinish"] = createOnFinishFunction(followUpSoundUrl);
+            }
             soundManager.createSound(soundData[i]);
         }
+    }
+
+    // This function is necessary because using an anonymous closure in createSounds()
+    // would keep the reference to followUpSoundUrl instead of its value
+    function createOnFinishFunction(followUpSoundUrl) {
+        return function () {
+            var sound = soundManager.getSoundById(followUpSoundUrl);
+            sound.play({volume: soundVolume});
+            currentMusicLoop = sound;
+        };
     }
 
     function exitMainMenu() {
@@ -376,9 +391,15 @@ $(document).ready(function () {
         $volumeButton.attr("src", IMAGES_FOLDER + buttonImage);
         if (currentMusic !== null) {
             currentMusic.setVolume(newSoundVolume);
+            if (currentMusicLoop !== null) {
+                currentMusicLoop.setVolume(newSoundVolume);
+            }
         }
         if (currentSound !== null) {
             currentSound.setVolume(newSoundVolume);
+            if (currentMusicLoop !== null) {
+                currentMusicLoop.setVolume(newSoundVolume);
+            }
         }
         soundVolume = newSoundVolume;
     }
@@ -585,6 +606,9 @@ $(document).ready(function () {
                 return;
             }
             currentMusic.stop();
+            if (currentMusicLoop !== null) {
+                currentMusicLoop.stop();
+            }
             clearTimeout(fadeOutMusicTimeout);
         }
         // If the music is muted, we still need to remember which music is supposed to be playing (currentMusic)
@@ -603,10 +627,14 @@ $(document).ready(function () {
                 var volume = currentMusic.volume;
                 if (volume > 0) {
                     currentMusic.setVolume(volume - 1);
+                    if (currentMusicLoop !== null) {
+                        currentMusicLoop.setVolume(volume - 1);
+                    }
                     fadeOutMusicTimeout = setTimeout(callbackWithArgument, interval);
                 } else {
                     currentMusic.stop();
                     currentMusic = null;
+                    currentMusicLoop = null;
                 }
             }
 
