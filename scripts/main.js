@@ -336,14 +336,17 @@ $(document).ready(function () {
     function toggleMusic() {
         if (musicMuted) {
             musicMuted = false;
-            if (currentMusic !== null) {
-                currentMusic.play();
+            if (currentMusic !== null && soundVolume != 0) {
+                currentMusic.play({volume: soundVolume});
             }
             $musicButton.attr("src", IMAGES_FOLDER + "music.png");
         } else {
             musicMuted = true;
             if (currentMusic !== null) {
                 currentMusic.stop();
+                if (currentMusicLoop !== null) {
+                    currentMusicLoop.stop();
+                }
             }
             $musicButton.attr("src", IMAGES_FOLDER + "noMusic.png");
         }
@@ -613,7 +616,7 @@ $(document).ready(function () {
         }
         // If the music is muted, we still need to remember which music is supposed to be playing (currentMusic)
         // This is why the whole function is not inside this conditional
-        if (!musicMuted) {
+        if (!musicMuted || soundVolume != 0) {
             music.play({volume: soundVolume});
         }
         currentMusic = music;
@@ -622,6 +625,11 @@ $(document).ready(function () {
     function fadeOutMusic(timeToFade) {
         if (currentMusic !== null) {
             var interval = timeToFade / 100;
+            // Setting the volume is necessary since most music plays
+            // rely on the play() function having the volume info.
+            // The internal volume of the sound object is still gonna be 100,
+            // which might make a spike in volume at the beginning of the fadeout.
+            currentMusic.setVolume(soundVolume);
             // We need a recursive function instead of a loop because we want to rely on setTimeout to stay asynchronous
             function fadeOutMusicRecursiveLoop(interval) {
                 var volume = currentMusic.volume;
