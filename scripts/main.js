@@ -133,10 +133,7 @@ $(document).ready(function () {
             event.stopPropagation();
             $advancedOptionsMenu.toggleClass("hidden-fading");
         });
-        $newGameButton.click(function () {
-            pageNb = 1;
-            exitMainMenu();
-        });
+        $newGameButton.click(displayIntroPage);
 
         // Other buttons
 
@@ -234,6 +231,33 @@ $(document).ready(function () {
                 $blackoutOverlay.toggleClass('hidden-fading');
                 setTimeout(initializeChangePageControls, 1500);
             });
+        }, 1500);
+    }
+
+    function displayIntroPage() {
+        $blackoutOverlay.toggleClass('hidden-fading');
+        setTimeout(function () {
+            $blackoutOverlay.toggleClass('hidden-fading');
+            var introContent =
+                "<p>RubyQuest was originally posted on 4chan's /tg/ board as an interactive story where the author, " +
+                "Weaver, would use suggestions from the readers as actions of the characters, " +
+                "in the style of text adventure games.</p>" +
+                "<p>Although the denizens of /tg/ first approached the thread with their usual indifference and " +
+                "joke suggestions, they quickly realized there was more to the story than a simple " +
+                "\"escape the room\" situation, and the community became very involved.</p>" +
+                "<p>This adaptation keeps some of the major reactions and comments from the readers of the original " +
+                "threads, as well as providing a link to the archived original threads on every page. " +
+                "In addition, some effects were added to make the story seem more like a visual novel, " +
+                "such as music and text scrolling.</p>" +
+                "<p>If you prefer to read it like a normal comic, you can disable all that fancy stuff " +
+                "in the options at the bottom of the page.</p>" +
+                "<p>Enjoy!</p>" +
+                "<h2 id=\"start-button\" class=\"main-menu-option\">Start Adventure</h2>";
+            $text.html(introContent);
+            $('#start-button').click(function() {
+                pageNb = 1;
+                exitMainMenu();
+            })
         }, 1500);
     }
 
