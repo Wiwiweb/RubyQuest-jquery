@@ -227,6 +227,7 @@ $(document).ready(function () {
             // If by any chance everything is not loaded yet, delay the fadein until everything is ready
             $.when(chapterDataLoaded, audioDataLoaded, audioBlipDataLoaded).then(function () {
                 $image.removeClass("hidden");
+                $text.removeClass("text-full-height");
                 loadPage(true);
                 $blackoutOverlay.toggleClass('hidden-fading');
                 setTimeout(initializeChangePageControls, 1500);

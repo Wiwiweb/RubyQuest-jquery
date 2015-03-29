@@ -187,6 +187,18 @@ body {
     #footer {
         height: 10%;
     }
+
+    #title {
+        font-size: 200%;
+    }
+
+    .main-menu-option {
+        font-size: 130%;
+    }
+
+    .text-full-height {
+        height: 90% !important;
+    }
 }
 
 @media (max-aspect-ratio: 4/3) {
