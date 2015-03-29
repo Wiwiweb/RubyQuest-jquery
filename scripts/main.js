@@ -150,7 +150,9 @@ $(document).ready(function () {
         $readerCommentsCheckbox.change(function () {
             readerComments = this.checked;
             $.cookie("ruby_readerComments", this.checked, {expires: 30});
-            loadPage(false);
+            if (pageNb > 0) { // Don't go erasing the main menu!
+                loadPage(false);
+            }
         });
 
         $textScrollCheckbox.change(function () {
@@ -255,7 +257,7 @@ $(document).ready(function () {
                 "<p>Enjoy!</p>" +
                 "<h2 id=\"start-button\" class=\"main-menu-option\">Start Adventure</h2>";
             $text.html(introContent);
-            $('#start-button').click(function() {
+            $('#start-button').click(function () {
                 pageNb = 1;
                 exitMainMenu();
             })
