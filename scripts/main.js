@@ -87,7 +87,7 @@ $(document).ready(function () {
 
         if (typeof cookieSavedPage !== 'undefined') {
             var parsedSavedPage = parseInt(cookieSavedPage);
-            if (!isNaN(parsedSavedPage)) {
+            if (!isNaN(parsedSavedPage) && parsedSavedPage > 0) {
                 $continueButton.text("Continue (Page " + parsedSavedPage + ")");
                 $continueButton.click(function () {
                     pageNb = parsedSavedPage;
