@@ -1,6 +1,8 @@
 RubyQuest-jQuery
 ================
 
+##[Link to the comic (Hosted on GitHub)](http://wiwiweb.github.io/RubyQuest-jquery/)
+
 Re-hosting of the RubyQuest webcomic using jQuery transitions and sounds.
 
 Currently the three ways to read this webcomic are:
